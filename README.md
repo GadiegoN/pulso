@@ -5,6 +5,55 @@
 
 ---
 
+## 📸 Demonstração Visual da Plataforma
+
+<div align="center">
+  <img src="public/screenshots/01-hero-hub.png" alt="Hero & PULSO HUB" width="100%" />
+  <p><em>Primeira dobra com a proposta de valor e a simulação em tempo real do PULSO HUB (Rádio Web, WhatsApp VIP e Portal da Cidade).</em></p>
+</div>
+
+<br />
+
+### 📊 Indicadores Inaugurais & Lançamento Transparente
+<div align="center">
+  <img src="public/screenshots/02-contadores.png" alt="Card de Contadores Inaugurais" width="100%" />
+  <p><em>Transparência total desde o marco zero: abertura para os primeiros municípios e estabelecimentos pioneiros.</em></p>
+</div>
+
+<br />
+
+### 📡 A Solução Multicanal
+<div align="center">
+  <img src="public/screenshots/03-solucao-canais.png" alt="Canais da Rede PULSO" width="100%" />
+  <p><em>Rádio Digital Web, Transmissão via WhatsApp, Portal Regional e Formatos de Redes Sociais.</em></p>
+</div>
+
+<br />
+
+### 🔄 Como Funciona o Fluxo Integrado
+<div align="center">
+  <img src="public/screenshots/04-como-funciona.png" alt="Fluxo da Comunicação Local" width="100%" />
+  <p><em>Fluxo simplificado da mensagem comercial até a chegada ao smartphone do morador.</em></p>
+</div>
+
+<br />
+
+### 👔 Liderança Executiva & Propósito Regional
+<div align="center">
+  <img src="public/screenshots/05-lideranca-ceo.png" alt="Liderança Executiva - Gadiego Nogueira" width="100%" />
+  <p><em>Compromisso regional com a liderança de Gadiego Nogueira (Conquista – MG), unindo tecnologia de software e processos reais.</em></p>
+</div>
+
+<br />
+
+### 📝 Formulário de Interesse Institucional
+<div align="center">
+  <img src="public/screenshots/06-formulario-interesse.png" alt="Formulário de Cadastro Pioneiro" width="100%" />
+  <p><em>Validação de interesse, máscara de telefone automática e conformidade com a LGPD.</em></p>
+</div>
+
+---
+
 ## 📌 Sobre o Projeto
 
 No interior do Brasil, os carros de som e panfletos físicos ainda são os meios mais comuns de divulgação para o comércio local. A **Rede PULSO** nasce como uma proposta contemporânea, inteligente e sustentável para modernizar essa comunicação.
@@ -38,21 +87,6 @@ A identidade visual foi desenvolvida com forte apelo estético inspirado no univ
 
 ---
 
-## 📑 Estrutura da Landing Page
-
-- **Navbar**: Logotipo dinâmico com insígnia de pulso elétrico, links de navegação suave, alternador de tema e botão CTA.
-- **Hero Section**: Headline marcante, proposta de valor e composição gráfica original (**PULSO HUB**) com equalizador de áudio animado e simulações de canais conectados.
-- **Card de Contadores (`+0`)**: Demonstração transparente do estágio inaugural (`Cidades +0`, `Estabelecimentos +0`, `Canais Ativos +0`, `Moradores +0`) com convite para parceiros fundadores.
-- **O Cenário (O Problema)**: Abordagem respeitosa sobre os limites de circulação física dos carros de som e dispersão de informações.
-- **A Solução**: Detalhamento dos 4 canais planejados com selo de transparência de escopo.
-- **Como Funciona**: Fluxo de 4 etapas (*Preparo → Organização → Distribuição → Acompanhamento pela comunidade*).
-- **Para Quem É**: Segmentação para comércio local, alimentação, saúde, serviços, eventos, entidades e moradores.
-- **Visão de Futuro & Manifesto**: Pilares de sustentabilidade urbana e respeito ao espaço público.
-- **Formulário de Interesse Pioneiro**: Validação de campos em tempo real, máscara de WhatsApp e modal completo de **Política de Privacidade** (em conformidade com a LGPD).
-- **Footer**: Links úteis, canais previstos, contatos oficiais e direitos autorais.
-
----
-
 ## 🛠️ Tecnologias Utilizadas
 
 - **Framework**: [Next.js](https://nextjs.org/) (App Router & Turbopack)
@@ -60,6 +94,7 @@ A identidade visual foi desenvolvida com forte apelo estético inspirado no univ
 - **Biblioteca de UI**: [React](https://react.dev/)
 - **Estilização**: [Tailwind CSS v4](https://tailwindcss.com/)
 - **Ícones**: [Lucide React](https://lucide.dev/)
+- **SEO & Metadados**: Schema.org JSON-LD, Sitemap dinâmico, Robots.txt, OpenGraph e Favicon SVG/PNG nativos.
 
 ---
 
@@ -101,18 +136,8 @@ npm run start
 
 ---
 
-## 🌐 Deploy na Vercel
-
-O projeto está 100% otimizado para deploy imediato na Vercel:
-
-1. Faça push deste repositório para o seu GitHub/GitLab.
-2. Acesse [vercel.com](https://vercel.com) e importe o repositório.
-3. O Next.js será identificado automaticamente. Clique em **Deploy**.
-4. Em menos de 1 minuto a sua landing page estará no ar com link público HTTPS.
-
----
-
 ## ⚖️ Licença & Termos Institucionais
 
 Desenvolvido para apresentação e validação da marca **PULSO — Rede de Comunicação Local**.  
+Liderança e engenharia: [Gadiego Nogueira](https://www.gadiegon.com).  
 Todos os direitos reservados © 2026.
