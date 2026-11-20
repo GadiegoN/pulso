@@ -44,6 +44,8 @@ export const metadata: Metadata = {
     "alternativa a carros de som",
     "marketing local",
     "publicidade no interior",
+    "Conquista MG",
+    "Gadiego Nogueira",
   ],
   authors: [{ name: "Gadiego Nogueira", url: "https://www.gadiegon.com" }],
   creator: "Gadiego Nogueira",
@@ -79,7 +81,6 @@ export const metadata: Metadata = {
     description:
       "A comunicação da sua cidade está evoluindo. Conectando marcas e moradores através de uma rede moderna, inteligente e digital.",
     images: ["/og-image.png"],
-    creator: "@pulsorede",
   },
   robots: {
     index: true,
@@ -110,17 +111,17 @@ const jsonLd = {
       "email": "contato@pulsorede.com.br",
       "founder": {
         "@type": "Person",
-        "name": "Gadiego Nogueira",
-        "jobTitle": "CEO & Fundador",
+        "name": "Gadiego de Jesus Nogueira",
+        "jobTitle": "Fundador & CEO",
         "url": "https://www.gadiegon.com",
         "sameAs": [
-          "https://www.gadiegon.com",
-          "https://github.com/GadiegoN"
-        ]
+          "https://www.linkedin.com/in/gadiegon/",
+          "https://github.com/GadiegoN",
+        ],
       },
       "sameAs": [
-        "https://instagram.com/pulsorede",
-        "https://linkedin.com/company/pulsorede",
+        "https://www.gadiegon.com",
+        "https://www.linkedin.com/in/gadiegon/",
       ],
     },
     {
