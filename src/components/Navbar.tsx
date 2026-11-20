@@ -22,6 +22,7 @@ export function Navbar() {
     { label: "A Solução", href: "#solucao" },
     { label: "Como Funciona", href: "#como-funciona" },
     { label: "Para Quem É", href: "#segmentos" },
+    { label: "Liderança", href: "#lideranca" },
     { label: "Visão de Futuro", href: "#visao" },
   ];
 
@@ -59,7 +60,7 @@ export function Navbar() {
           </a>
 
           {/* Desktop Nav Links */}
-          <nav className="hidden lg:flex items-center gap-8">
+          <nav className="hidden lg:flex items-center gap-7">
             {navLinks.map((link) => (
               <a
                 key={link.href}

@@ -71,6 +71,11 @@ export function Footer() {
                 </a>
               </li>
               <li>
+                <a href="#lideranca" className="hover:text-[#ff2a85] dark:hover:text-[#00f0ff] transition-colors">
+                  Liderança & CEO
+                </a>
+              </li>
+              <li>
                 <a href="#visao" className="hover:text-[#ff2a85] dark:hover:text-[#00f0ff] transition-colors">
                   Visão de Futuro
                 </a>
