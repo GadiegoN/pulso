@@ -24,7 +24,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://pulsorede.com.br"),
+  metadataBase: new URL("https://pulso-nu-eight.vercel.app"),
   title: {
     default: "PULSO — Rede de Comunicação Local | A sua cidade em uma nova frequência",
     template: "%s | PULSO — Rede de Comunicação Local",
@@ -56,13 +56,21 @@ export const metadata: Metadata = {
     telephone: false,
   },
   alternates: {
-    canonical: "https://pulsorede.com.br",
+    canonical: "https://pulso-nu-eight.vercel.app",
+  },
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/icon" },
+      { url: "/favicon.ico" },
+    ],
+    apple: "/icon.svg",
   },
   openGraph: {
     title: "PULSO — Rede de Comunicação Local",
     description:
       "A sua cidade em uma nova frequência. Mais alcance para quem comunica, mais informação e conexão para quem vive a cidade.",
-    url: "https://pulsorede.com.br",
+    url: "https://pulso-nu-eight.vercel.app",
     siteName: "Rede PULSO",
     locale: "pt_BR",
     type: "website",
@@ -102,10 +110,10 @@ const jsonLd = {
   "@graph": [
     {
       "@type": "Organization",
-      "@id": "https://pulsorede.com.br/#organization",
+      "@id": "https://pulso-nu-eight.vercel.app/#organization",
       "name": "PULSO — Rede de Comunicação Local",
-      "url": "https://pulsorede.com.br",
-      "logo": "https://pulsorede.com.br/logo.png",
+      "url": "https://pulso-nu-eight.vercel.app",
+      "logo": "https://pulso-nu-eight.vercel.app/logo.png",
       "description":
         "Rede de comunicação e publicidade local integrada para cidades do interior do Brasil.",
       "email": "contato@pulsorede.com.br",
@@ -126,11 +134,11 @@ const jsonLd = {
     },
     {
       "@type": "WebSite",
-      "@id": "https://pulsorede.com.br/#website",
-      "url": "https://pulsorede.com.br",
+      "@id": "https://pulso-nu-eight.vercel.app/#website",
+      "url": "https://pulso-nu-eight.vercel.app",
       "name": "PULSO — Rede de Comunicação Local",
       "publisher": {
-        "@id": "https://pulsorede.com.br/#organization",
+        "@id": "https://pulso-nu-eight.vercel.app/#organization",
       },
       "inLanguage": "pt-BR",
     },
@@ -138,7 +146,7 @@ const jsonLd = {
       "@type": "Service",
       "serviceType": "Rede de Comunicação e Publicidade Local",
       "provider": {
-        "@id": "https://pulsorede.com.br/#organization",
+        "@id": "https://pulso-nu-eight.vercel.app/#organization",
       },
       "areaServed": {
         "@type": "Country",
