@@ -45,8 +45,8 @@ export const metadata: Metadata = {
     "marketing local",
     "publicidade no interior",
   ],
-  authors: [{ name: "Rede PULSO", url: "https://pulsorede.com.br" }],
-  creator: "Rede PULSO",
+  authors: [{ name: "Gadiego Nogueira", url: "https://www.gadiegon.com" }],
+  creator: "Gadiego Nogueira",
   publisher: "Rede PULSO",
   formatDetection: {
     email: false,
@@ -110,8 +110,13 @@ const jsonLd = {
       "email": "contato@pulsorede.com.br",
       "founder": {
         "@type": "Person",
-        "name": "Gabriel Nogueira",
+        "name": "Gadiego Nogueira",
         "jobTitle": "CEO & Fundador",
+        "url": "https://www.gadiegon.com",
+        "sameAs": [
+          "https://www.gadiegon.com",
+          "https://github.com/GadiegoN"
+        ]
       },
       "sameAs": [
         "https://instagram.com/pulsorede",
