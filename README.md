@@ -1,7 +1,8 @@
 # ⚡ PULSO — Rede de Comunicação Local
 
-> **A sua cidade em uma nova frequência.**  
-> Uma nova maneira de conectar comércios, empresas, instituições e moradores através de uma infraestrutura digital integrada para cidades pequenas e médias do interior.
+> **Uma mensagem. Vários canais. Toda a cidade conectada.**  
+> *A sua cidade em uma nova frequência.*  
+> Uma infraestrutura digital integrada para modernizar a comunicação comercial e institucional em cidades pequenas e médias do interior.
 
 ---
 
@@ -76,13 +77,13 @@ A proposta da PULSO é integrar gradualmente os seguintes canais:
 
 ---
 
-## 🎨 Identidade Visual (GTA 6 Vice City Aesthetic)
+## 🎨 Identidade Visual Contemporânea & Alta Energia
 
-A identidade visual foi desenvolvida com forte apelo estético inspirado no universo contemporâneo de **GTA 6 (Vice City / Leonida)**, equilibrando modernidade tecnológica e credibilidade institucional:
+A identidade visual foi desenvolvida com forte apelo estético contemporâneo, equilibrando modernidade tecnológica, dinamismo urbano e credibilidade institucional para o varejo:
 
-- **Paleta Sunset Neon**: *Sunset Pink* (`#ff2a85`), *Tangerine/Amber* (`#ff7300` / `#f59e0b`) e *Vice Cyan / Electric Blue* (`#00f0ff` / `#0284c7`).
-- **Modo Escuro (Dark Mode)**: Imersão em tons *Midnight Obsidian* (`#080914`), com linhas de grade cibernéticas sutis, efeitos de iluminação e bordas neon.
-- **Modo Claro (Light Mode)**: Fundo limpo, contemporâneo e de alto contraste em ardósia/off-white (`#fcfcfd`), garantindo legibilidade perfeita e sofisticação.
+- **Paleta Sunset & Frequência Neon**: *Sunset Pink* (`#ff2a85`), *Tangerine/Amber* (`#ff7300` / `#f59e0b`) e *Electric Cyan* (`#00f0ff` / `#0284c7`).
+- **Modo Escuro (Dark Mode)**: Imersão em tons *Midnight Obsidian* (`#080914`), com linhas de grade tecnológicas sutis, efeitos de iluminação e bordas com gradiente luminoso.
+- **Modo Claro (Light Mode)**: Fundo limpo, contemporâneo e de alto contraste em ardósia/off-white (`#fcfcfd`), garantindo legibilidade perfeita e sofisticação empresarial.
 - **Alternador de Tema**: Botão Sol / Lua no cabeçalho com transição fluida e persistência via `localStorage`.
 
 ---
@@ -108,7 +109,7 @@ A identidade visual foi desenvolvida com forte apelo estético inspirado no univ
 
 1. Clone o repositório ou navegue até a pasta do projeto:
    ```bash
-   cd voz-local
+   cd pulso
    ```
 
 2. Instale as dependências:

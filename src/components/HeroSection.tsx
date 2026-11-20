@@ -57,7 +57,8 @@ export function HeroSection() {
 
             {/* Subheadline */}
             <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
-              Uma nova maneira de conectar empresas, marcas e pessoas. Mais alcance para quem comunica, mais informação para quem vive a cidade.
+              <strong className="font-semibold text-slate-900 dark:text-white">Uma mensagem. Vários canais. Toda a cidade conectada.</strong>{" "}
+              Uma nova maneira de integrar empresas, comércio e pessoas. Mais alcance para quem comunica, mais informação para quem vive a cidade.
             </p>
 
             {/* CTAs */}
