@@ -1,14 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
-import { 
-  Send, 
-  CheckCircle2, 
-  Sparkles, 
-  Building2, 
-  MapPin, 
-  Phone, 
-  Mail, 
+import {
+  Send,
+  CheckCircle2,
+  Sparkles,
+  Building2,
+  MapPin,
+  Phone,
+  Mail,
   MessageSquare,
   AlertCircle,
   HelpCircle,
@@ -87,17 +87,17 @@ export function ContactCtaSection() {
 
   return (
     <section id="contato" className="py-24 relative overflow-hidden">
-      
+
       {/* Background Neon Accent Glows */}
-      <div 
-        aria-hidden="true" 
-        className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-gradient-to-tr from-[#ff2a85]/15 via-[#ff7300]/10 to-[#00f0ff]/15 blur-3xl opacity-60 rounded-full" 
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-gradient-to-tr from-[#ff2a85]/15 via-[#ff7300]/10 to-[#00f0ff]/15 blur-3xl opacity-60 rounded-full"
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          
+
           {/* Left Column: Headline & Project Context */}
           <div className="lg:col-span-5 space-y-6">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-slate-300 dark:border-white/10 bg-white dark:bg-white/5 text-xs font-semibold text-slate-700 dark:text-slate-300">
@@ -144,8 +144,8 @@ export function ContactCtaSection() {
                 Canal Direto de Atendimento
               </div>
               <div className="flex flex-col gap-2 text-sm text-slate-600 dark:text-slate-300">
-                <a 
-                  href="mailto:contato@pulsorede.com.br" 
+                <a
+                  href="mailto:contato@pulsorede.com.br"
                   className="hover:text-[#ff2a85] dark:hover:text-[#00f0ff] flex items-center gap-2 transition-colors"
                 >
                   <Mail className="w-4 h-4 text-slate-400" />
@@ -164,7 +164,7 @@ export function ContactCtaSection() {
           <div className="lg:col-span-7">
             <div className="relative rounded-3xl p-[1px] bg-gradient-to-tr from-[#ff2a85]/40 via-slate-200 to-[#00f0ff]/40 dark:from-[#ff2a85]/40 dark:via-white/10 dark:to-[#00f0ff]/40 shadow-2xl">
               <div className="rounded-[23px] bg-white dark:bg-[#121428] p-7 sm:p-9">
-                
+
                 {isSuccess ? (
                   <div className="text-center py-10 space-y-4">
                     <div className="w-16 h-16 rounded-full bg-emerald-500/10 text-emerald-500 mx-auto flex items-center justify-center">
@@ -220,9 +220,8 @@ export function ContactCtaSection() {
                           value={formData.nome}
                           onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
                           placeholder="Ex: Carlos Silva"
-                          className={`w-full px-4 py-3 rounded-xl border text-sm bg-slate-50 dark:bg-white/5 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#ff2a85] transition-all ${
-                            errors.nome ? "border-rose-500" : "border-slate-300 dark:border-white/10"
-                          }`}
+                          className={`w-full px-4 py-3 rounded-xl border text-sm bg-slate-50 dark:bg-white/5 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#ff2a85] transition-all ${errors.nome ? "border-rose-500" : "border-slate-300 dark:border-white/10"
+                            }`}
                         />
                         {errors.nome && <p className="text-xs text-rose-500 mt-1">{errors.nome}</p>}
                       </div>
@@ -235,10 +234,9 @@ export function ContactCtaSection() {
                           type="text"
                           value={formData.empresa}
                           onChange={(e) => setFormData({ ...formData, empresa: e.target.value })}
-                          placeholder="Ex: Supermercado Central"
-                          className={`w-full px-4 py-3 rounded-xl border text-sm bg-slate-50 dark:bg-white/5 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#ff2a85] transition-all ${
-                            errors.empresa ? "border-rose-500" : "border-slate-300 dark:border-white/10"
-                          }`}
+                          placeholder="Ex: Supermercado Local"
+                          className={`w-full px-4 py-3 rounded-xl border text-sm bg-slate-50 dark:bg-white/5 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#ff2a85] transition-all ${errors.empresa ? "border-rose-500" : "border-slate-300 dark:border-white/10"
+                            }`}
                         />
                         {errors.empresa && <p className="text-xs text-rose-500 mt-1">{errors.empresa}</p>}
                       </div>
@@ -275,9 +273,8 @@ export function ContactCtaSection() {
                           value={formData.cidade}
                           onChange={(e) => setFormData({ ...formData, cidade: e.target.value })}
                           placeholder="Ex: Rio Claro"
-                          className={`w-full px-4 py-3 rounded-xl border text-sm bg-slate-50 dark:bg-white/5 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#ff2a85] transition-all ${
-                            errors.cidade ? "border-rose-500" : "border-slate-300 dark:border-white/10"
-                          }`}
+                          className={`w-full px-4 py-3 rounded-xl border text-sm bg-slate-50 dark:bg-white/5 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#ff2a85] transition-all ${errors.cidade ? "border-rose-500" : "border-slate-300 dark:border-white/10"
+                            }`}
                         />
                         {errors.cidade && <p className="text-xs text-rose-500 mt-1">{errors.cidade}</p>}
                       </div>
@@ -308,9 +305,8 @@ export function ContactCtaSection() {
                           value={formData.whatsapp}
                           onChange={(e) => handlePhoneChange(e.target.value)}
                           placeholder="(00) 00000-0000"
-                          className={`w-full px-4 py-3 rounded-xl border text-sm bg-slate-50 dark:bg-white/5 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#ff2a85] transition-all ${
-                            errors.whatsapp ? "border-rose-500" : "border-slate-300 dark:border-white/10"
-                          }`}
+                          className={`w-full px-4 py-3 rounded-xl border text-sm bg-slate-50 dark:bg-white/5 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#ff2a85] transition-all ${errors.whatsapp ? "border-rose-500" : "border-slate-300 dark:border-white/10"
+                            }`}
                         />
                         {errors.whatsapp && <p className="text-xs text-rose-500 mt-1">{errors.whatsapp}</p>}
                       </div>

@@ -1,14 +1,14 @@
 "use client";
 
 import React from "react";
-import { 
-  Radio, 
-  MessageSquare, 
-  Globe, 
-  Share2, 
-  Volume2, 
-  Send, 
-  Search, 
+import {
+  Radio,
+  MessageSquare,
+  Globe,
+  Share2,
+  Volume2,
+  Send,
+  Search,
   Sparkles,
   ArrowUpRight,
   ShieldCheck,
@@ -37,7 +37,7 @@ export function SolutionSection() {
           </div>
           <div className="flex items-center gap-2">
             <Volume2 className="w-4 h-4 text-[#ff2a85] shrink-0" />
-            <div className="truncate text-slate-300 font-medium">Spot Comercial: Supermercado Central</div>
+            <div className="truncate text-slate-300 font-medium">Spot Comercial: Supermercado Local</div>
           </div>
           <div className="w-full bg-white/10 rounded-full h-1.5 overflow-hidden">
             <div className="bg-gradient-to-r from-[#ff2a85] to-[#00f0ff] h-full w-2/3 rounded-full" />
@@ -121,7 +121,7 @@ export function SolutionSection() {
   return (
     <section id="solucao" className="py-24 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-slate-300 dark:border-white/10 bg-white dark:bg-white/5 text-xs font-semibold text-slate-700 dark:text-slate-300">
