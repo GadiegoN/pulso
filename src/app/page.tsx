@@ -10,6 +10,7 @@ import { LeadershipSection } from "@/components/LeadershipSection";
 import { VisionSection } from "@/components/VisionSection";
 import { ContactCtaSection } from "@/components/ContactCtaSection";
 import { Footer } from "@/components/Footer";
+import { DigitalRadioPlayer } from "@/components/DigitalRadioPlayer";
 
 export default function Home() {
   return (
@@ -29,6 +30,9 @@ export default function Home() {
         <VisionSection />
         <ContactCtaSection />
       </main>
+
+      {/* Player da Rádio Digital Flutuante */}
+      <DigitalRadioPlayer />
 
       {/* Footer */}
       <Footer />

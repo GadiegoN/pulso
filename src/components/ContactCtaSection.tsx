@@ -15,6 +15,7 @@ import {
   ArrowRight
 } from "lucide-react";
 import { PrivacyModal } from "./PrivacyModal";
+import { submitLeadAction } from "@/lib/leads/actions";
 
 export function ContactCtaSection() {
   const [formData, setFormData] = useState({
@@ -51,26 +52,45 @@ export function ContactCtaSection() {
     return Object.keys(err).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
 
     setIsSubmitting(true);
-    // Simulating validation and storing registered interest in localStorage
-    setTimeout(() => {
-      try {
-        const stored = JSON.parse(localStorage.getItem("pulso-cadastros") || "[]");
-        stored.push({
-          ...formData,
-          createdAt: new Date().toISOString(),
-        });
-        localStorage.setItem("pulso-cadastros", JSON.stringify(stored));
-      } catch (e) {
-        console.error(e);
-      }
+    setErrors({});
+
+    try {
+      const fd = new FormData();
+      fd.append("nome", formData.nome);
+      fd.append("empresa", formData.empresa);
+      fd.append("segmento", formData.segmento);
+      fd.append("cidade", formData.cidade);
+      fd.append("estado", formData.estado);
+      fd.append("whatsapp", formData.whatsapp);
+      fd.append("email", formData.email);
+      fd.append("mensagem", formData.mensagem);
+      fd.append("concordaTermos", String(formData.concordaTermos));
+
+      const res = await submitLeadAction({}, fd);
       setIsSubmitting(false);
-      setIsSuccess(true);
-    }, 900);
+
+      if (res.error) {
+        if (res.fieldErrors) {
+          const errMap: Record<string, string> = {};
+          for (const [k, v] of Object.entries(res.fieldErrors)) {
+            errMap[k] = v[0];
+          }
+          setErrors(errMap);
+        } else {
+          setErrors({ submit: res.error });
+        }
+      } else {
+        setIsSuccess(true);
+      }
+    } catch (err: any) {
+      setIsSubmitting(false);
+      setErrors({ submit: "Erro de comunicação ao registrar interesse. Tente novamente." });
+    }
   };
 
   const handlePhoneChange = (val: string) => {

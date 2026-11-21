@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Activity, Menu, X, Sun, Moon, ArrowRight, Radio } from "lucide-react";
+import Link from "next/link";
+import { Activity, Menu, X, Sun, Moon, ArrowRight, Radio, Lock } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
 
 export function Navbar() {
@@ -18,12 +19,13 @@ export function Navbar() {
   }, []);
 
   const navLinks = [
-    { label: "O Cenário", href: "#cenario" },
-    { label: "A Solução", href: "#solucao" },
-    { label: "Como Funciona", href: "#como-funciona" },
-    { label: "Para Quem É", href: "#segmentos" },
-    { label: "Liderança", href: "#lideranca" },
-    { label: "Visão de Futuro", href: "#visao" },
+    { label: "O Cenário", href: "/#cenario" },
+    { label: "A Solução", href: "/#solucao" },
+    { label: "Como Funciona", href: "/#como-funciona" },
+    { label: "Guia Local", href: "/guia" },
+    { label: "Para Quem É", href: "/#segmentos" },
+    { label: "Liderança", href: "/#lideranca" },
+    { label: "Visão", href: "/#visao" },
   ];
 
   return (
@@ -88,6 +90,15 @@ export function Navbar() {
               )}
             </button>
 
+            {/* Login / Painel Link */}
+            <Link
+              href="/login"
+              className="text-xs font-semibold px-4 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-100/80 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-800 dark:text-slate-200 transition-all cursor-pointer flex items-center gap-1.5"
+            >
+              <Lock className="w-3.5 h-3.5 text-[#ff2a85] dark:text-[#00f0ff]" />
+              <span>Painel</span>
+            </Link>
+
             {/* CTA Button */}
             <a
               href="#contato"
@@ -138,6 +149,15 @@ export function Navbar() {
               </a>
             ))}
             <div className="pt-3 border-t border-slate-200 dark:border-white/10 flex flex-col gap-2">
+              <Link
+                href="/login"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-semibold border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/5 text-slate-800 dark:text-slate-200 text-center"
+              >
+                <Lock className="w-4 h-4 text-[#ff2a85] dark:text-[#00f0ff]" />
+                <span>Acessar Painel</span>
+              </Link>
+
               <a
                 href="#contato"
                 onClick={() => setMobileMenuOpen(false)}
