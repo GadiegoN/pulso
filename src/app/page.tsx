@@ -14,7 +14,6 @@ import { LeadershipSection } from "@/components/LeadershipSection";
 import { VisionSection } from "@/components/VisionSection";
 import { ContactCtaSection } from "@/components/ContactCtaSection";
 import { Footer } from "@/components/Footer";
-import { DigitalRadioPlayer } from "@/components/DigitalRadioPlayer";
 
 export const instant = false;
 
@@ -68,9 +67,6 @@ export default async function Home() {
         <VisionSection />
         <ContactCtaSection />
       </main>
-
-      {/* Player da Rádio Digital Flutuante */}
-      <DigitalRadioPlayer />
 
       {/* Footer */}
       <Footer />

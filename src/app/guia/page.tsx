@@ -6,7 +6,6 @@ import { eq, desc } from 'drizzle-orm';
 import { connection } from 'next/server';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
-import { DigitalRadioPlayer } from '@/components/DigitalRadioPlayer';
 import GuiaClientView from './GuiaClientView';
 
 export const instant = false;
@@ -54,7 +53,6 @@ export default async function GuiaComercialPage() {
         />
       </main>
 
-      <DigitalRadioPlayer />
       <Footer />
     </div>
   );

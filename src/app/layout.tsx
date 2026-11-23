@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { DigitalRadioPlayer } from "@/components/DigitalRadioPlayer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -176,7 +177,10 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col antialiased selection:bg-[#ff2a85] selection:text-white">
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          {children}
+          <DigitalRadioPlayer />
+        </ThemeProvider>
       </body>
     </html>
   );

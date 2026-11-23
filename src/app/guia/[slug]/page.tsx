@@ -12,7 +12,6 @@ import { eq, and, desc } from 'drizzle-orm';
 import { connection } from 'next/server';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
-import { DigitalRadioPlayer } from '@/components/DigitalRadioPlayer';
 import EstablishmentShowcaseClient from './EstablishmentShowcaseClient';
 
 export const instant = false;
@@ -89,17 +88,6 @@ export default async function EstablishmentShowcasePage({
         />
       </main>
 
-      <DigitalRadioPlayer
-        initialSpot={
-          partnerSpots[0]
-            ? {
-                title: `${partnerSpots[0].title} • ${establishment.name}`,
-                audioUrl: partnerSpots[0].audioUrl,
-                durationSeconds: partnerSpots[0].durationSeconds,
-              }
-            : undefined
-        }
-      />
       <Footer />
     </div>
   );

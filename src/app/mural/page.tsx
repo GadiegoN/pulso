@@ -11,7 +11,6 @@ import { eq, desc } from 'drizzle-orm';
 import { connection } from 'next/server';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
-import { DigitalRadioPlayer } from '@/components/DigitalRadioPlayer';
 import MuralClientView from './MuralClientView';
 
 export const instant = false;
@@ -68,7 +67,6 @@ export default async function MuralCidadePage() {
         <MuralClientView broadcasts={broadcasts} channels={activeChannels} />
       </main>
 
-      <DigitalRadioPlayer />
       <Footer />
     </div>
   );
