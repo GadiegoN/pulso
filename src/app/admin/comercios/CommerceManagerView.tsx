@@ -1,9 +1,11 @@
 'use client';
 
 import React, { useState, useActionState } from 'react';
+import Link from 'next/link';
 import {
   createEstablishmentAction,
   toggleEstablishmentStatusAction,
+  toggleEstablishmentFeaturedAction,
   deleteEstablishmentAction,
   createCategoryAction,
   type CommerceActionState,
@@ -20,6 +22,7 @@ import {
   AlertCircle,
   ExternalLink,
   Layers,
+  Star,
 } from 'lucide-react';
 
 const initialActionState: CommerceActionState = {};
@@ -145,8 +148,9 @@ export default function CommerceManagerView({
                   <th className="px-6 py-3 font-semibold">Nome Comercial</th>
                   <th className="px-6 py-3 font-semibold">Categoria</th>
                   <th className="px-6 py-3 font-semibold">Praça / Cidade</th>
-                  <th className="px-6 py-3 font-semibold">WhatsApp de Atendimento</th>
+                  <th className="px-6 py-3 font-semibold">WhatsApp / Cliques</th>
                   <th className="px-6 py-3 font-semibold">Responsável</th>
+                  <th className="px-6 py-3 font-semibold">Plano / Destaque</th>
                   <th className="px-6 py-3 font-semibold">Status</th>
                   <th className="px-6 py-3 font-semibold text-right">Ações</th>
                 </tr>
@@ -154,7 +158,7 @@ export default function CommerceManagerView({
               <tbody className="divide-y divide-white/5 text-slate-300">
                 {establishments.length === 0 ? (
                   <tr>
-                    <td colSpan={7} className="px-6 py-12 text-center text-slate-500">
+                    <td colSpan={8} className="px-6 py-12 text-center text-slate-500">
                       Nenhum estabelecimento cadastrado. Clique em "Cadastrar Estabelecimento" para adicionar o primeiro comércio parceiro.
                     </td>
                   </tr>
@@ -162,7 +166,17 @@ export default function CommerceManagerView({
                   establishments.map((est) => (
                     <tr key={est.id} className="hover:bg-white/[0.02] transition-colors">
                       <td className="px-6 py-3.5">
-                        <div className="font-semibold text-white">{est.name}</div>
+                        <div className="flex items-center gap-2">
+                          <span className="font-semibold text-white">{est.name}</span>
+                          <Link
+                            href={`/guia/${est.slug}`}
+                            target="_blank"
+                            className="text-slate-400 hover:text-amber-300 transition-colors"
+                            title="Abrir Vitrine Pública Individual"
+                          >
+                            <ExternalLink className="w-3.5 h-3.5" />
+                          </Link>
+                        </div>
                         {est.description && (
                           <div className="text-[11px] text-slate-400 truncate max-w-xs">{est.description}</div>
                         )}
@@ -186,15 +200,20 @@ export default function CommerceManagerView({
 
                       <td className="px-6 py-3.5 font-mono text-emerald-400">
                         {est.whatsapp ? (
-                          <a
-                            href={`https://wa.me/55${est.whatsapp.replace(/\D/g, '')}`}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="hover:underline flex items-center gap-1"
-                          >
-                            <Phone className="w-3.5 h-3.5" />
-                            <span>{est.whatsapp}</span>
-                          </a>
+                          <div>
+                            <a
+                              href={`https://wa.me/55${est.whatsapp.replace(/\D/g, '')}`}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="hover:underline flex items-center gap-1"
+                            >
+                              <Phone className="w-3.5 h-3.5" />
+                              <span>{est.whatsapp}</span>
+                            </a>
+                            <span className="text-[10px] text-slate-500 block">
+                              {est.whatsappClicks || 0} clique(s) no Guia
+                            </span>
+                          </div>
                         ) : (
                           '—'
                         )}
@@ -209,6 +228,22 @@ export default function CommerceManagerView({
                         ) : (
                           <span className="text-slate-600 italic">Não vinculado</span>
                         )}
+                      </td>
+
+                      <td className="px-6 py-3.5">
+                        <button
+                          type="button"
+                          onClick={() => toggleEstablishmentFeaturedAction(est.id, !est.isFeatured)}
+                          className={`px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase flex items-center gap-1 transition-all cursor-pointer ${
+                            est.isFeatured
+                              ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40 shadow-[0_0_12px_rgba(245,158,11,0.2)]'
+                              : 'bg-white/5 text-slate-400 border border-white/10 hover:text-white'
+                          }`}
+                          title="Alternar destaque de Parceiro Âncora no topo do Guia"
+                        >
+                          <Star className={`w-3 h-3 ${est.isFeatured ? 'fill-amber-400 text-amber-400' : ''}`} />
+                          <span>{est.isFeatured ? 'Parceiro Âncora' : 'Vitrine Padrão'}</span>
+                        </button>
                       </td>
 
                       <td className="px-6 py-3.5">
@@ -402,6 +437,17 @@ export default function CommerceManagerView({
                   className="w-full bg-[#121622] border border-white/10 rounded-xl px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-amber-400"
                 />
               </div>
+
+              <label className="flex items-center gap-2.5 p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 cursor-pointer">
+                <input
+                  type="checkbox"
+                  name="isFeatured"
+                  className="rounded accent-amber-400"
+                />
+                <span className="text-amber-200 font-medium">
+                  ⭐ Destacar como <strong>Parceiro Âncora / Patrocinador Master</strong> (Fixado no topo do Guia Comercial)
+                </span>
+              </label>
 
               <div className="flex justify-end gap-2 pt-2 border-t border-white/10">
                 <button

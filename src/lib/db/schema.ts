@@ -4,6 +4,24 @@ import { pgTable, text, timestamp, boolean, uuid, integer, jsonb, pgEnum } from 
 export const userRoleEnum = pgEnum('user_role', ['admin', 'operator', 'merchant', 'user']);
 export const userStatusEnum = pgEnum('user_status', ['active', 'suspended', 'pending_verification']);
 export const inviteStatusEnum = pgEnum('invite_status', ['pending', 'accepted', 'revoked', 'expired']);
+export const broadcastCategoryEnum = pgEnum('broadcast_category', [
+  'public_utility',
+  'civic_alert',
+  'partner_offer',
+  'local_news',
+]);
+export const spotRequestStatusEnum = pgEnum('spot_request_status', [
+  'pending',
+  'approved',
+  'produced',
+  'rejected',
+]);
+export const leadStatusEnum = pgEnum('lead_status', [
+  'new',
+  'contacted',
+  'converted',
+  'archived',
+]);
 
 // --- PROFILES (Vinculado estritamente ao auth.users do Supabase) ---
 export const profiles = pgTable('profiles', {
@@ -82,6 +100,8 @@ export const establishments = pgTable('establishments', {
   description: text('description'),
   whatsapp: text('whatsapp'),
   address: text('address'),
+  whatsappClicks: integer('whatsapp_clicks').default(0).notNull(),
+  isFeatured: boolean('is_featured').default(false).notNull(),
   isActive: boolean('is_active').default(true).notNull(),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
@@ -108,6 +128,46 @@ export const radioSchedules = pgTable('radio_schedules', {
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
 });
 
+export const spotRequests = pgTable('spot_requests', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  establishmentId: uuid('establishment_id').references(() => establishments.id).notNull(),
+  merchantId: uuid('merchant_id').references(() => profiles.id).notNull(),
+  title: text('title').notNull(),
+  scriptNotes: text('script_notes').notNull(),
+  preferredTimeSlot: text('preferred_time_slot'),
+  status: spotRequestStatusEnum('status').default('pending').notNull(),
+  adminFeedback: text('admin_feedback'),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+});
+
+// --- NEGÓCIO: CENTRAL WHATSAPP & COMUNICADOS COMUNITÁRIOS ---
+export const whatsappChannels = pgTable('whatsapp_channels', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  cityId: uuid('city_id').references(() => cities.id).notNull(),
+  name: text('name').notNull(),
+  neighborhoodOrScope: text('neighborhood_or_scope').notNull(),
+  inviteLink: text('invite_link'),
+  memberCount: integer('member_count').default(0).notNull(),
+  isActive: boolean('is_active').default(true).notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+});
+
+export const whatsappBroadcasts = pgTable('whatsapp_broadcasts', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  cityId: uuid('city_id').references(() => cities.id).notNull(),
+  channelId: uuid('channel_id').references(() => whatsappChannels.id),
+  establishmentId: uuid('establishment_id').references(() => establishments.id),
+  authorId: uuid('author_id').references(() => profiles.id).notNull(),
+  category: broadcastCategoryEnum('category').default('public_utility').notNull(),
+  title: text('title').notNull(),
+  messageBody: text('message_body').notNull(),
+  formattedMessage: text('formatted_message').notNull(),
+  ctaUrl: text('cta_url'),
+  dispatchedAt: timestamp('dispatched_at', { withTimezone: true }).defaultNow().notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+});
+
 // --- LEADS & CONTATOS ---
 export const leads = pgTable('leads', {
   id: uuid('id').defaultRandom().primaryKey(),
@@ -116,5 +176,6 @@ export const leads = pgTable('leads', {
   whatsapp: text('whatsapp').notNull(),
   email: text('email'),
   interest: text('interest').notNull(),
+  status: leadStatusEnum('status').default('new').notNull(),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
 });

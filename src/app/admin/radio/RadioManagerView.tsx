@@ -11,6 +11,7 @@ import {
   createCityAction,
   type RadioActionState,
 } from '@/lib/radio/actions';
+import { updateSpotRequestStatusAction } from '@/lib/portal/actions';
 import {
   Radio,
   Music,
@@ -35,6 +36,7 @@ interface Props {
   schedules: any[];
   cities: any[];
   establishments: any[];
+  spotRequests?: any[];
 }
 
 export default function RadioManagerView({
@@ -42,8 +44,9 @@ export default function RadioManagerView({
   schedules,
   cities,
   establishments,
+  spotRequests = [],
 }: Props) {
-  const [activeTab, setActiveTab] = useState<'spots' | 'schedules'>('spots');
+  const [activeTab, setActiveTab] = useState<'spots' | 'schedules' | 'requests'>('spots');
   const [showSpotModal, setShowSpotModal] = useState(false);
   const [showScheduleModal, setShowScheduleModal] = useState(false);
   const [showCityModal, setShowCityModal] = useState(false);
@@ -152,6 +155,19 @@ export default function RadioManagerView({
         >
           <Calendar className="w-4 h-4" />
           <span>Grade Semanal de Transmissão ({schedules.length})</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setActiveTab('requests')}
+          className={`pb-3 px-4 text-xs font-semibold flex items-center gap-2 border-b-2 transition-all cursor-pointer ${
+            activeTab === 'requests'
+              ? 'border-amber-500 text-white'
+              : 'border-transparent text-slate-400 hover:text-slate-200'
+          }`}
+        >
+          <Store className="w-4 h-4" />
+          <span>Pedidos do Portal do Comerciante ({spotRequests.length})</span>
         </button>
       </div>
 
@@ -354,6 +370,99 @@ export default function RadioManagerView({
               </tbody>
             </table>
           </div>
+        </div>
+      )}
+
+      {/* ABA 3: PEDIDOS DE SPOTS DO PORTAL DO COMERCIANTE */}
+      {activeTab === 'requests' && (
+        <div className="rounded-2xl bg-[#0c0f17] border border-white/10 overflow-hidden shadow-xl">
+          <div className="p-6 border-b border-white/10 flex items-center justify-between">
+            <div>
+              <h2 className="text-base font-bold text-white flex items-center gap-2">
+                <Store className="w-4 h-4 text-amber-400" />
+                <span>Solicitações de Gravação e Veiculação de Comerciantes</span>
+              </h2>
+              <p className="text-xs text-slate-400 mt-0.5">
+                Roteiros e briefings enviados pelos comerciantes parceiros através do /portal
+              </p>
+            </div>
+            <span className="text-xs text-slate-500 font-mono">
+              Total: {spotRequests.length}
+            </span>
+          </div>
+
+          {spotRequests.length === 0 ? (
+            <div className="p-12 text-center text-xs text-slate-500">
+              Nenhuma solicitação de spot pendente enviada pelo Portal do Comerciante até o momento.
+            </div>
+          ) : (
+            <div className="divide-y divide-white/5">
+              {spotRequests.map((req) => (
+                <div
+                  key={req.id}
+                  className="p-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 hover:bg-white/[0.02]"
+                >
+                  <div className="space-y-1.5 max-w-3xl">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="px-2.5 py-0.5 rounded text-[11px] font-bold uppercase bg-amber-500/15 text-amber-300 border border-amber-500/30">
+                        {req.establishmentName || 'Comércio Parceiro'}
+                      </span>
+                      <span className="text-xs text-slate-400 font-mono">
+                        {req.merchantEmail}
+                      </span>
+                      {req.preferredTimeSlot && (
+                        <span className="text-xs text-purple-300 font-mono">
+                          • Faixa: {req.preferredTimeSlot}
+                        </span>
+                      )}
+                    </div>
+                    <h4 className="text-sm font-bold text-white">{req.title}</h4>
+                    <p className="text-xs text-slate-300 whitespace-pre-line bg-black/30 p-3 rounded-xl border border-white/5">
+                      {req.scriptNotes}
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-2 shrink-0">
+                    <button
+                      type="button"
+                      onClick={() => updateSpotRequestStatusAction(req.id, 'approved')}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold border cursor-pointer ${
+                        req.status === 'approved'
+                          ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40'
+                          : 'bg-white/5 text-slate-300 border-white/10 hover:bg-white/10'
+                      }`}
+                    >
+                      Em Gravação
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => updateSpotRequestStatusAction(req.id, 'produced')}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold border cursor-pointer ${
+                        req.status === 'produced'
+                          ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
+                          : 'bg-white/5 text-slate-300 border-white/10 hover:bg-white/10'
+                      }`}
+                    >
+                      No Ar
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => updateSpotRequestStatusAction(req.id, 'rejected')}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold border cursor-pointer ${
+                        req.status === 'rejected'
+                          ? 'bg-red-500/20 text-red-300 border-red-500/40'
+                          : 'bg-white/5 text-slate-400 border-white/10 hover:bg-red-500/10'
+                      }`}
+                    >
+                      Revisar
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
 

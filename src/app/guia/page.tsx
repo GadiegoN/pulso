@@ -30,6 +30,7 @@ export default async function GuiaComercialPage() {
       whatsapp: establishments.whatsapp,
       address: establishments.address,
       description: establishments.description,
+      isFeatured: establishments.isFeatured,
       cityName: cities.name,
       cityState: cities.state,
       categoryId: establishments.categoryId,
@@ -40,7 +41,7 @@ export default async function GuiaComercialPage() {
     .innerJoin(cities, eq(establishments.cityId, cities.id))
     .innerJoin(categories, eq(establishments.categoryId, categories.id))
     .where(eq(establishments.isActive, true))
-    .orderBy(desc(establishments.createdAt));
+    .orderBy(desc(establishments.isFeatured), desc(establishments.createdAt));
 
   return (
     <div className="min-h-screen flex flex-col bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-300">

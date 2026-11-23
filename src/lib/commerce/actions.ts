@@ -1,7 +1,7 @@
 'use server';
 
 import { z } from 'zod';
-import { requireAdmin, recordAuditLog } from '@/lib/auth/server';
+import { requireStaff as requireAdmin, recordAuditLog } from '@/lib/auth/server';
 import { db } from '@/lib/db';
 import { establishments, categories, cities, spots } from '@/lib/db/schema';
 import { eq, sql } from 'drizzle-orm';
@@ -15,6 +15,7 @@ const establishmentSchema = z.object({
   address: z.string().optional(),
   description: z.string().optional(),
   ownerId: z.string().uuid().optional().or(z.literal('')),
+  isFeatured: z.boolean().default(false),
 });
 
 const categorySchema = z.object({
@@ -45,6 +46,7 @@ export async function createEstablishmentAction(
     address: formData.get('address')?.toString()?.trim() || '',
     description: formData.get('description')?.toString()?.trim() || '',
     ownerId: formData.get('ownerId')?.toString() || '',
+    isFeatured: formData.get('isFeatured') === 'on' || formData.get('isFeatured') === 'true',
   };
 
   const validation = establishmentSchema.safeParse(rawData);
@@ -55,7 +57,8 @@ export async function createEstablishmentAction(
     };
   }
 
-  const { name, cityId, categoryId, whatsapp, address, description, ownerId } = validation.data;
+  const { name, cityId, categoryId, whatsapp, address, description, ownerId, isFeatured } =
+    validation.data;
   const slug = name
     .toLowerCase()
     .normalize('NFD')
@@ -74,6 +77,7 @@ export async function createEstablishmentAction(
       address: address || null,
       description: description || null,
       ownerId: ownerId || null,
+      isFeatured,
       isActive: true,
     })
     .returning();
@@ -81,12 +85,34 @@ export async function createEstablishmentAction(
   await recordAuditLog({
     actorId: admin.id,
     action: 'establishment_created',
-    details: { establishmentId: newEst.id, name: newEst.name, cityId },
+    details: { establishmentId: newEst.id, name: newEst.name, cityId, isFeatured },
   });
 
   revalidatePath('/admin/comercios');
   revalidatePath('/admin/radio');
+  revalidatePath('/guia');
   return { success: true };
+}
+
+/**
+ * Alterna o selo "Parceiro Âncora / Destaque" do Estabelecimento no Guia Comercial.
+ */
+export async function toggleEstablishmentFeaturedAction(id: string, isFeatured: boolean) {
+  const admin = await requireAdmin();
+
+  await db
+    .update(establishments)
+    .set({ isFeatured, updatedAt: new Date() })
+    .where(eq(establishments.id, id));
+
+  await recordAuditLog({
+    actorId: admin.id,
+    action: isFeatured ? 'establishment_featured_enabled' : 'establishment_featured_disabled',
+    details: { establishmentId: id },
+  });
+
+  revalidatePath('/admin/comercios');
+  revalidatePath('/guia');
 }
 
 /**
@@ -176,6 +202,21 @@ export async function createCategoryAction(
 
   revalidatePath('/admin/comercios');
   return { success: true };
+}
+
+/**
+ * Registra clique real no botão de WhatsApp de um estabelecimento no Guia Comercial (/guia).
+ */
+export async function recordWhatsappClickAction(establishmentId: string) {
+  if (!establishmentId) return;
+
+  await db
+    .update(establishments)
+    .set({
+      whatsappClicks: sql`${establishments.whatsappClicks} + 1`,
+      updatedAt: new Date(),
+    })
+    .where(eq(establishments.id, establishmentId));
 }
 
 /**

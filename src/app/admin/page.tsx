@@ -4,8 +4,11 @@ import { connection } from 'next/server';
 
 export const instant = false;
 import { db } from '@/lib/db';
-import { profiles, invitations, auditLogs, securityEvents, leads } from '@/lib/db/schema';
+import { profiles, invitations, auditLogs, leads, cities, categories } from '@/lib/db/schema';
 import { sql, desc } from 'drizzle-orm';
+import { requireStaff } from '@/lib/auth/server';
+import { seedDefaultCategories } from '@/lib/commerce/actions';
+import LeadsTableClient from './LeadsTableClient';
 import {
   Users,
   MailCheck,
@@ -21,6 +24,7 @@ import {
 
 export default async function AdminDashboardPage() {
   await connection();
+  const currentStaff = await requireStaff();
   // Consultas reais de contagem no PostgreSQL
   const [profilesCount] = await db.select({ count: sql<number>`count(*)::int` }).from(profiles);
   const [invitationsCount] = await db
@@ -30,12 +34,16 @@ export default async function AdminDashboardPage() {
   const [leadsCount] = await db.select({ count: sql<number>`count(*)::int` }).from(leads);
   const [auditLogsCount] = await db.select({ count: sql<number>`count(*)::int` }).from(auditLogs);
 
-  // Últimos 6 leads capturados pela Landing Page
+  // Últimos 10 leads capturados pela Landing Page
   const recentLeads = await db
     .select()
     .from(leads)
     .orderBy(desc(leads.createdAt))
-    .limit(6);
+    .limit(10);
+
+  await seedDefaultCategories();
+  const allCities = await db.select().from(cities).orderBy(cities.name);
+  const allCategories = await db.select().from(categories).orderBy(categories.name);
 
   // Últimos 6 registros de auditoria
   const recentLogs = await db
@@ -57,15 +65,17 @@ export default async function AdminDashboardPage() {
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
-          <Link
-            href="/admin/equipe"
-            className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#ff3366] to-[#7928ca] hover:from-[#e62e5c] hover:to-[#6b22b5] text-white font-medium text-xs shadow-[0_0_15px_rgba(255,51,102,0.3)] transition-all flex items-center gap-2"
-          >
-            <MailCheck className="w-4 h-4" />
-            <span>Expedir Convite</span>
-          </Link>
-        </div>
+        {currentStaff.role === 'admin' && (
+          <div className="flex items-center gap-3">
+            <Link
+              href="/admin/equipe"
+              className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#ff3366] to-[#7928ca] hover:from-[#e62e5c] hover:to-[#6b22b5] text-white font-medium text-xs shadow-[0_0_15px_rgba(255,51,102,0.3)] transition-all flex items-center gap-2"
+            >
+              <MailCheck className="w-4 h-4" />
+              <span>Expedir Convite</span>
+            </Link>
+          </div>
+        )}
       </div>
 
       {/* Grid de Métricas Reais */}
@@ -143,78 +153,12 @@ export default async function AdminDashboardPage() {
         </div>
       </div>
 
-      {/* Tabela de Leads Recentes Capturados */}
-      <div className="rounded-2xl bg-[#0c0f17] border border-white/10 overflow-hidden shadow-xl">
-        <div className="p-6 border-b border-white/10 flex items-center justify-between">
-          <div>
-            <h2 className="text-base font-bold text-white flex items-center gap-2">
-              <MessageSquare className="w-4 h-4 text-[#ff3366]" />
-              <span>Interesses Cadastrados na Landing Page</span>
-            </h2>
-            <p className="text-xs text-slate-400 mt-0.5">
-              Comerciantes, prefeituras e parceiros que preencheram o formulário de contato
-            </p>
-          </div>
-          <span className="text-xs text-slate-500 font-mono">Total: {recentLeads.length}</span>
-        </div>
-
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
-            <thead className="bg-white/5 text-slate-400 uppercase tracking-wider border-b border-white/5">
-              <tr>
-                <th className="px-6 py-3 font-semibold">Nome / Contato</th>
-                <th className="px-6 py-3 font-semibold">Praça / Cidade</th>
-                <th className="px-6 py-3 font-semibold">WhatsApp</th>
-                <th className="px-6 py-3 font-semibold">Interesse & Detalhes</th>
-                <th className="px-6 py-3 font-semibold">Data</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-white/5 text-slate-300">
-              {recentLeads.length === 0 ? (
-                <tr>
-                  <td colSpan={5} className="px-6 py-8 text-center text-slate-500 font-sans">
-                    Nenhum interesse registrado até o momento. O formulário na página inicial está ativo e gravando no banco.
-                  </td>
-                </tr>
-              ) : (
-                recentLeads.map((lead) => (
-                  <tr key={lead.id} className="hover:bg-white/[0.02] transition-colors">
-                    <td className="px-6 py-3.5">
-                      <div className="font-semibold text-white">{lead.name}</div>
-                      {lead.email && <div className="text-[11px] text-slate-500 font-mono">{lead.email}</div>}
-                    </td>
-
-                    <td className="px-6 py-3.5 text-slate-400 flex items-center gap-1.5">
-                      <MapPin className="w-3.5 h-3.5 text-slate-500" />
-                      <span>{lead.city}</span>
-                    </td>
-
-                    <td className="px-6 py-3.5 font-mono text-cyan-300">
-                      <a
-                        href={`https://wa.me/55${lead.whatsapp.replace(/\D/g, '')}`}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="hover:underline flex items-center gap-1"
-                      >
-                        <Phone className="w-3.5 h-3.5 text-emerald-400" />
-                        <span>{lead.whatsapp}</span>
-                      </a>
-                    </td>
-
-                    <td className="px-6 py-3.5 text-slate-300 max-w-xs truncate" title={lead.interest}>
-                      {lead.interest}
-                    </td>
-
-                    <td className="px-6 py-3.5 text-slate-500 font-mono text-[11px]">
-                      {new Date(lead.createdAt).toLocaleDateString('pt-BR')}
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      {/* Tabela de Leads Recentes Capturados com Conversão em 1 Clique */}
+      <LeadsTableClient
+        leads={recentLeads}
+        cities={allCities}
+        categories={allCategories}
+      />
 
       {/* Tabela de Trilha de Auditoria Recente */}
       <div className="rounded-2xl bg-[#0c0f17] border border-white/10 overflow-hidden shadow-xl">
@@ -229,13 +173,15 @@ export default async function AdminDashboardPage() {
             </p>
           </div>
 
-          <Link
-            href="/admin/auditoria"
-            className="text-xs text-[#00f0ff] hover:underline flex items-center gap-1 font-medium"
-          >
-            <span>Ver histórico completo</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
+          {currentStaff.role === 'admin' && (
+            <Link
+              href="/admin/auditoria"
+              className="text-xs text-[#00f0ff] hover:underline flex items-center gap-1 font-medium"
+            >
+              <span>Ver histórico completo</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          )}
         </div>
 
         <div className="overflow-x-auto">
@@ -266,7 +212,14 @@ export default async function AdminDashboardPage() {
                         {log.action}
                       </span>
                     </td>
-                    <td className="px-6 py-3.5 text-slate-400">{log.ipAddress || '127.0.0.1'}</td>
+                    <td className="px-6 py-3.5 text-slate-400">
+                      <span
+                        className="inline-block blur-xs hover:blur-none transition-all duration-200 cursor-pointer select-all"
+                        title="Passe o mouse para revelar o IP"
+                      >
+                        {log.ipAddress || '127.0.0.1'}
+                      </span>
+                    </td>
                     <td className="px-6 py-3.5 text-slate-400 truncate max-w-xs font-sans">
                       {log.details ? JSON.stringify(log.details) : '—'}
                     </td>

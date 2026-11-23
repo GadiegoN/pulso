@@ -198,12 +198,15 @@ export async function loginAction(
     }
   }
 
-  // 6. Redirecionamento seguro baseado no papel e parâmetro 'next'
+  // 6. Redirecionamento seguro baseado no papel e parâmetro 'next' (bloqueando Open Redirect //)
+  const isSafeNext = Boolean(next && next.startsWith('/') && !next.startsWith('//'));
   let targetUrl = '/';
-  if (existingProfile?.role === 'admin') {
-    targetUrl = next && next.startsWith('/admin') ? next : '/admin';
-  } else if (next && next.startsWith('/') && !next.startsWith('/admin')) {
-    targetUrl = next;
+  if (existingProfile?.role === 'admin' || existingProfile?.role === 'operator') {
+    targetUrl = isSafeNext && next!.startsWith('/admin') ? next! : '/admin';
+  } else if (existingProfile?.role === 'merchant') {
+    targetUrl = isSafeNext && next!.startsWith('/portal') ? next! : '/portal';
+  } else if (isSafeNext && !next!.startsWith('/admin') && !next!.startsWith('/portal')) {
+    targetUrl = next!;
   }
 
   redirect(targetUrl);

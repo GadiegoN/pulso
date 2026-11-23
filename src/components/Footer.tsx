@@ -39,8 +39,8 @@ export function Footer() {
             </p>
 
             <div className="pt-2 text-xs text-slate-500 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-400" />
-              <span>Apresentação Institucional de Conceito • 2026</span>
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span>Plataforma em Operação • Conquista - MG • 2026</span>
             </div>
           </div>
 
@@ -51,59 +51,67 @@ export function Footer() {
             </h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="#cenario" className="hover:text-[#ff2a85] dark:hover:text-[#00f0ff] transition-colors">
+                <a href="/#cenario" className="hover:text-[#ff2a85] dark:hover:text-[#00f0ff] transition-colors">
                   O Cenário Atual
                 </a>
               </li>
               <li>
-                <a href="#solucao" className="hover:text-[#ff2a85] dark:hover:text-[#00f0ff] transition-colors">
+                <a href="/#solucao" className="hover:text-[#ff2a85] dark:hover:text-[#00f0ff] transition-colors">
                   A Solução Multicanal
                 </a>
               </li>
               <li>
-                <a href="#como-funciona" className="hover:text-[#ff2a85] dark:hover:text-[#00f0ff] transition-colors">
+                <a href="/#como-funciona" className="hover:text-[#ff2a85] dark:hover:text-[#00f0ff] transition-colors">
                   Como Funciona o Fluxo
                 </a>
               </li>
               <li>
-                <a href="#segmentos" className="hover:text-[#ff2a85] dark:hover:text-[#00f0ff] transition-colors">
+                <a href="/#segmentos" className="hover:text-[#ff2a85] dark:hover:text-[#00f0ff] transition-colors">
                   Para Quem É
                 </a>
               </li>
               <li>
-                <a href="#lideranca" className="hover:text-[#ff2a85] dark:hover:text-[#00f0ff] transition-colors">
+                <a href="/#lideranca" className="hover:text-[#ff2a85] dark:hover:text-[#00f0ff] transition-colors">
                   Liderança & CEO
                 </a>
               </li>
               <li>
-                <a href="#visao" className="hover:text-[#ff2a85] dark:hover:text-[#00f0ff] transition-colors">
+                <a href="/#visao" className="hover:text-[#ff2a85] dark:hover:text-[#00f0ff] transition-colors">
                   Visão de Futuro
                 </a>
               </li>
             </ul>
           </div>
 
-          {/* Col 4: Canais Previstos */}
+          {/* Col 4: Ecossistema Ativo */}
           <div className="space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-white">
-              Canais Previstos
+              Ecossistema PULSO
             </h4>
             <ul className="space-y-2 text-sm text-slate-500 dark:text-slate-400">
-              <li className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#ff2a85]" />
-                <span>Rádio Digital Web</span>
+              <li>
+                <a href="/guia" className="flex items-center gap-1.5 hover:text-[#ff2a85] dark:hover:text-[#00f0ff] transition-colors">
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                  <span>Guia Comercial Local</span>
+                </a>
               </li>
-              <li className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                <span>Transmissão WhatsApp</span>
+              <li>
+                <a href="/mural" className="flex items-center gap-1.5 hover:text-[#ff2a85] dark:hover:text-[#00f0ff] transition-colors">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                  <span>Mural & Grupos WhatsApp</span>
+                </a>
               </li>
-              <li className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#00f0ff]" />
-                <span>Portal da Cidade</span>
+              <li>
+                <a href="/portal" className="flex items-center gap-1.5 hover:text-[#ff2a85] dark:hover:text-[#00f0ff] transition-colors">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#00f0ff]" />
+                  <span>Portal do Comerciante</span>
+                </a>
               </li>
-              <li className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
-                <span>Formatos para Redes</span>
+              <li>
+                <a href="/login" className="flex items-center gap-1.5 hover:text-[#ff2a85] dark:hover:text-[#00f0ff] transition-colors">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#ff2a85]" />
+                  <span>Acesso Administrativo</span>
+                </a>
               </li>
             </ul>
           </div>

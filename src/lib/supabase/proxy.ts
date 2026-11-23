@@ -44,8 +44,11 @@ export async function updateSession(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
   // Guarda de perímetro na Borda (Camada 1):
-  // Se tentar acessar rota administrativa (/admin/*) sem autenticação válida
-  if (pathname.startsWith('/admin') && !pathname.startsWith('/admin/login')) {
+  // Se tentar acessar rota administrativa (/admin/*) ou portal do comerciante (/portal/*) sem autenticação válida
+  if (
+    (pathname.startsWith('/admin') && !pathname.startsWith('/admin/login')) ||
+    pathname.startsWith('/portal')
+  ) {
     if (!user) {
       const url = request.nextUrl.clone();
       url.pathname = '/login';

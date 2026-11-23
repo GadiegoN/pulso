@@ -176,10 +176,13 @@ export async function verifyMfaLoginAction(
       action: 'mfa_challenge_verified_login',
     });
 
+    const isSafeNext = Boolean(next && next.startsWith('/') && !next.startsWith('//'));
     let target = '/';
-    if (profile?.role === 'admin') {
-      target = next && next.startsWith('/admin') ? next : '/admin';
-    } else if (next && next.startsWith('/') && !next.startsWith('/admin')) {
+    if (profile?.role === 'admin' || profile?.role === 'operator') {
+      target = isSafeNext && next.startsWith('/admin') ? next : '/admin';
+    } else if (profile?.role === 'merchant') {
+      target = isSafeNext && next.startsWith('/portal') ? next : '/portal';
+    } else if (isSafeNext && !next.startsWith('/admin') && !next.startsWith('/portal')) {
       target = next;
     }
 

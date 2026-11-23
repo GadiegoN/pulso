@@ -1,48 +1,59 @@
 "use client";
 
 import React from "react";
-import { 
-  Building2, 
-  MapPin, 
-  Users, 
-  Radio, 
-  Sparkles, 
-  Rocket, 
-  ArrowRight 
+import {
+  Building2,
+  MapPin,
+  Users,
+  Radio,
+  Rocket,
+  ArrowRight,
 } from "lucide-react";
 
-export function CounterCardSection() {
+interface CounterStats {
+  citiesCount: number;
+  establishmentsCount: number;
+  activeChannelsCount: number;
+  connectedResidentsCount: number;
+}
+
+export function CounterCardSection({ stats }: { stats?: CounterStats }) {
+  const citiesCount = stats?.citiesCount ?? 0;
+  const establishmentsCount = stats?.establishmentsCount ?? 0;
+  const activeChannelsCount = stats?.activeChannelsCount ?? 0;
+  const connectedResidentsCount = stats?.connectedResidentsCount ?? 0;
+
   const metrics = [
     {
       label: "Cidades",
-      value: "+0",
-      description: "Primeiros municípios em fase de mapeamento",
+      value: `+${citiesCount}`,
+      description: "Primeiros municípios integrados à rede PULSO",
       icon: MapPin,
-      badge: "Pioneirismo",
+      badge: citiesCount > 0 ? "Em Operação" : "Pioneirismo",
       gradient: "from-[#ff2a85] to-[#ff7300]",
     },
     {
       label: "Estabelecimentos",
-      value: "+0",
-      description: "Abertura para comércios e parceiros fundadores",
+      value: `+${establishmentsCount}`,
+      description: "Comércios e parceiros ativos no Guia Local",
       icon: Building2,
       badge: "Inscrições Abertas",
       gradient: "from-[#ff7300] to-[#f59e0b]",
     },
     {
-      label: "Canais Ativos",
-      value: "+0",
-      description: "Módulos digitais preparados para ativação técnica",
+      label: "Canais & Spots Ativos",
+      value: `+${activeChannelsCount}`,
+      description: "Grupos comunitários e spots de áudio em transmissão",
       icon: Radio,
       badge: "Infraestrutura",
       gradient: "from-[#0284c7] to-[#00f0ff]",
     },
     {
       label: "Moradores Conectados",
-      value: "+0",
-      description: "Comunidade local a ser integrada sem poluição sonora",
+      value: `+${connectedResidentsCount}`,
+      description: "Comunidade local integrada sem poluição sonora",
       icon: Users,
-      badge: "Lista de Espera",
+      badge: "Tempo Real",
       gradient: "from-emerald-500 to-teal-400",
     },
   ];
@@ -50,23 +61,21 @@ export function CounterCardSection() {
   return (
     <section className="relative py-12 -mt-6 sm:-mt-10 mb-8 z-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
         {/* Main Card Container */}
         <div className="relative rounded-3xl p-[1px] bg-gradient-to-r from-[#ff2a85]/40 via-[#ff7300]/30 to-[#00f0ff]/40 shadow-2xl backdrop-blur-xl">
           <div className="rounded-[23px] bg-white/90 dark:bg-[#0c0e20]/90 p-6 sm:p-8 md:p-10">
-            
             {/* Header / Intro */}
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-8 mb-8 border-b border-slate-200/80 dark:border-white/10">
               <div className="space-y-1">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs font-bold text-slate-700 dark:text-slate-300">
                   <Rocket className="w-3.5 h-3.5 text-[#ff2a85]" />
-                  <span>FASE DE LANÇAMENTO • INDICADORES INICIAIS</span>
+                  <span>INDICADORES EM TEMPO REAL • DADOS DO ECOSSISTEMA</span>
                 </div>
                 <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">
-                  Estamos na linha de partida.
+                  Crescimento transparente em tempo real.
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
-                  Transparência total desde o primeiro dia. Os contadores começam do marco zero para registrar cada nova cidade e comércio que se juntar à rede.
+                  Transparência total desde o primeiro dia. Os indicadores abaixo refletem diretamente os registros ativos da nossa base de dados.
                 </p>
               </div>
 
@@ -99,7 +108,9 @@ export function CounterCardSection() {
 
                     {/* Numeric Counter with Neon Gradient */}
                     <div className="flex items-baseline gap-1 mb-1">
-                      <span className={`text-4xl sm:text-5xl font-black font-mono tracking-tight bg-clip-text text-transparent bg-gradient-to-r ${item.gradient}`}>
+                      <span
+                        className={`text-4xl sm:text-5xl font-black font-mono tracking-tight bg-clip-text text-transparent bg-gradient-to-r ${item.gradient}`}
+                      >
                         {item.value}
                       </span>
                     </div>
@@ -119,17 +130,15 @@ export function CounterCardSection() {
             {/* Bottom Status strip */}
             <div className="mt-8 pt-6 border-t border-slate-200/80 dark:border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400">
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
-                <span>Mapeamento aberto para cidades médias e pequenas</span>
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span>Sincronizado ao vivo com o banco de dados PostgreSQL</span>
               </div>
               <div>
-                Primeiras cidades cadastradas terão destaque na inauguração regional.
+                Primeiras cidades e comércios cadastrados têm destaque na inauguração regional.
               </div>
             </div>
-
           </div>
         </div>
-
       </div>
     </section>
   );

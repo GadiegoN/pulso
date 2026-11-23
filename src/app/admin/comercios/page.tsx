@@ -1,5 +1,5 @@
 import React from 'react';
-import { requireAdmin } from '@/lib/auth/server';
+import { requireStaff } from '@/lib/auth/server';
 import { db } from '@/lib/db';
 import { establishments, cities, categories, profiles, spots } from '@/lib/db/schema';
 import { desc, eq, sql } from 'drizzle-orm';
@@ -11,7 +11,7 @@ export const instant = false;
 
 export default async function AdminComerciosPage() {
   await connection();
-  await requireAdmin();
+  await requireStaff();
 
   // Garante categorias essenciais prontas
   await seedDefaultCategories();
@@ -36,6 +36,8 @@ export default async function AdminComerciosPage() {
       whatsapp: establishments.whatsapp,
       address: establishments.address,
       description: establishments.description,
+      whatsappClicks: establishments.whatsappClicks,
+      isFeatured: establishments.isFeatured,
       isActive: establishments.isActive,
       cityId: establishments.cityId,
       cityName: cities.name,

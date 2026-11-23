@@ -61,19 +61,24 @@ No interior do Brasil, os carros de som e panfletos físicos ainda são os meios
 
 O projeto reúne múltiplos canais em um único ecossistema, permitindo que lojistas e prestadores de serviços alcancem a população com agilidade, sem gerar poluição sonora nas ruas e sem depender exclusivamente de algoritmos imprevisíveis das redes sociais.
 
-> [!NOTE]
-> Este repositório contém a **landing page institucional e de apresentação de conceito** do projeto pioneiro. Não inclui plataformas administrativas, backend de anúncios ou sistemas de autenticação, que fazem parte do roadmap futuro.
+> [!IMPORTANT]
+> Este repositório contém a **plataforma completa em produção da Rede PULSO**, incluindo Portal Institucional, Guia Comercial Público (`/guia`), Mural Oficial da Cidade (`/mural`), Rádio Digital com Sequenciador Automático (`/api/radio/queue`), Portal do Comerciante Parceiro (`/portal`) e Suíte Administrativa Enterprise (`/admin`) com RBAC em 3 camadas, MFA (TOTP) e Auditoria Imutável no PostgreSQL.
 
 ---
 
-## 📡 Visão Multicanal da Rede
+## 🏛️ Arquitetura & Módulos da Plataforma
 
-A proposta da PULSO é integrar gradualmente os seguintes canais:
-
-1. **📻 Rádio Digital pela Internet**: Programação musical contínua, notícias locais e veiculação de spots comerciais transmitidos online (ouvida no trânsito, no celular ou nos estabelecimentos).
-2. **💬 Distribuição via WhatsApp**: Canal verificado para envio autorizado de ofertas do dia, comunicados e utilidade pública para moradores cadastrados voluntariamente.
-3. **🌐 Portal & Vitrine Local**: Um ponto de encontro centralizado na web com guia comercial, agenda de eventos, classificados e notícias da região.
-4. **📱 Conteúdos para Redes Sociais**: Materiais audiovisuais padronizados e profissionais para ampliar a presença digital das marcas parceiras.
+1. **🛡️ Governança, Autenticação & RBAC (`src/lib/auth`, `src/proxy.ts`)**:
+   - **Defesa em 3 Camadas**: Proxy de borda Next.js 16 (`src/proxy.ts`), Guardas de Server Components (`requireAdmin`, `requireMerchant`, `requireAuth`) e validação estrita em Server Actions.
+   - **Hierarquia de Papéis**: `admin`, `operator`, `merchant` e `user` protegidos por Triggers no PostgreSQL (`protect_profile_privileges`) com imunidade entre administradores e bloqueio de auto-elevação.
+   - **Segurança Avançada**: Autenticação Multifator (`TOTP`), revogação remota de sessões, rate-limiting contra força bruta, convites criptográficos SHA-256 (48h) e trilha perene em `audit_logs`.
+2. **📻 Rádio Digital & Sequenciador de Áudio (`/admin/radio`, `/api/radio/queue`)**:
+   - Upload de spots comerciais e vinhetas no Supabase Storage (`radio-spots`), grade semanal de programação por cidade e player flutuante com sequenciamento inteligente e transição contínua.
+3. **🏪 Comércios, Guia Local & Portal do Comerciante (`/admin/comercios`, `/guia`, `/portal`)**:
+   - Catálogo público com busca instantânea, filtro por segmentos e telemetria real de cliques no WhatsApp (`whatsapp_clicks`).
+   - Área exclusiva do comerciante parceiro (`/portal`) para edição da própria vitrine, acompanhamento de métricas e solicitação de novos spots para a rádio.
+4. **💬 Central de WhatsApp & Mural da Cidade (`/admin/whatsapp`, `/mural`)**:
+   - Formatador padronizado de comunicados de utilidade pública, alertas municipais e informes comerciais, gestão de grupos comunitários por bairro e exibição em tempo real no Mural da Cidade (`/mural`).
 
 ---
 

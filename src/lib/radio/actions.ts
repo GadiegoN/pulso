@@ -1,7 +1,7 @@
 'use server';
 
 import { z } from 'zod';
-import { requireAdmin, recordAuditLog } from '@/lib/auth/server';
+import { requireStaff as requireAdmin, recordAuditLog } from '@/lib/auth/server';
 import { createClient } from '@/lib/supabase/server';
 import { db } from '@/lib/db';
 import { spots, radioSchedules, cities, establishments } from '@/lib/db/schema';

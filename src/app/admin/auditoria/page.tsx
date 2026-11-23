@@ -87,7 +87,14 @@ export default async function AuditPage() {
                         </div>
                       )}
                     </td>
-                    <td className="px-6 py-3.5 text-slate-400">{log.ipAddress || '127.0.0.1'}</td>
+                    <td className="px-6 py-3.5 text-slate-400">
+                      <span
+                        className="inline-block blur-xs hover:blur-none transition-all duration-200 cursor-pointer select-all"
+                        title="Passe o mouse para revelar o IP"
+                      >
+                        {log.ipAddress || '127.0.0.1'}
+                      </span>
+                    </td>
                     <td className="px-6 py-3.5 text-slate-400 max-w-sm truncate font-sans">
                       {log.details ? (
                         <span title={JSON.stringify(log.details, null, 2)}>

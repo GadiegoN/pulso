@@ -61,7 +61,7 @@ export async function requireAuth(): Promise<UserProfile> {
 }
 
 /**
- * Guarda Server-Side Estrito para Painel Administrativo.
+ * Guarda Server-Side Estrito para Painel Administrativo (Governança & Hierarquia).
  * REGRA INEGOCIÁVEL 4: O servidor valida role === 'admin' e status === 'active'.
  */
 export async function requireAdmin(): Promise<UserProfile> {
@@ -69,6 +69,34 @@ export async function requireAdmin(): Promise<UserProfile> {
 
   if (profile.role !== 'admin') {
     // 403 Proibido para usuários sem prerrogativa de administrador
+    redirect('/acesso-negado');
+  }
+
+  return profile;
+}
+
+/**
+ * Guarda Server-Side para Equipe Operacional (Administradores e Operadores de Rádio/Comunicação).
+ * Permite operar Rádio Digital, Comércios, Central WhatsApp e Visão Geral, mantendo Equipe e Auditoria restritos a requireAdmin().
+ */
+export async function requireStaff(): Promise<UserProfile> {
+  const profile = await requireAuth();
+
+  if (profile.role !== 'admin' && profile.role !== 'operator') {
+    redirect('/acesso-negado');
+  }
+
+  return profile;
+}
+
+/**
+ * Guarda Server-Side Estrito para Portal do Comerciante Parceiro.
+ * Permite acesso exclusivo a contas com role === 'merchant' ou 'admin'.
+ */
+export async function requireMerchant(): Promise<UserProfile> {
+  const profile = await requireAuth();
+
+  if (profile.role !== 'merchant' && profile.role !== 'admin') {
     redirect('/acesso-negado');
   }
 

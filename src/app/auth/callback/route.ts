@@ -11,8 +11,9 @@ export async function GET(request: NextRequest) {
     const { error } = await supabase.auth.exchangeCodeForSession(code);
 
     if (!error) {
-      // Redireciona com segurança para a URL de destino
-      const destination = next.startsWith('/') ? next : '/';
+      // Redireciona com segurança bloqueando Open Redirects (ex: //evil.com)
+      const isSafeRelative = next.startsWith('/') && !next.startsWith('//');
+      const destination = isSafeRelative ? next : '/';
       return NextResponse.redirect(new URL(destination, request.url));
     }
   }

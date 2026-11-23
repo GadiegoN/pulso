@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { requireAdmin } from '@/lib/auth/server';
+import { requireStaff } from '@/lib/auth/server';
 import { logoutAction } from '@/lib/auth/actions';
 import { connection } from 'next/server';
 import {
@@ -8,6 +8,7 @@ import {
   Users,
   Radio,
   Store,
+  MessageSquare,
   ShieldAlert,
   LogOut,
   ExternalLink,
@@ -24,9 +25,10 @@ export default async function AdminLayout({
 }) {
   await connection();
   // REGRA INEGOCIÁVEL 4: Guarda de Servidor Estrita
-  // Valida que o usuário está autenticado, com perfil ativo e papel 'admin'.
-  // Se não for admin, requireAdmin() redireciona imediatamente para /acesso-negado (403).
-  const adminProfile = await requireAdmin();
+  // Valida que o usuário está autenticado, com perfil ativo e papel 'admin' ou 'operator'.
+  // Rotas de governança (/admin/equipe e /admin/auditoria) exigem requireAdmin() adicionalmente.
+  const adminProfile = await requireStaff();
+  const isSuperAdmin = adminProfile.role === 'admin';
 
   return (
     <div className="min-h-screen bg-[#06080d] text-slate-100 flex font-sans selection:bg-[#ff3366] selection:text-white">
@@ -60,13 +62,15 @@ export default async function AdminLayout({
               <span>Visão Geral</span>
             </Link>
 
-            <Link
-              href="/admin/equipe"
-              className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 transition-all font-medium"
-            >
-              <Users className="w-4 h-4 text-[#00f0ff]" />
-              <span>Equipe & Convites</span>
-            </Link>
+            {isSuperAdmin && (
+              <Link
+                href="/admin/equipe"
+                className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 transition-all font-medium"
+              >
+                <Users className="w-4 h-4 text-[#00f0ff]" />
+                <span>Equipe & Convites</span>
+              </Link>
+            )}
 
             <Link
               href="/admin/radio"
@@ -85,12 +89,22 @@ export default async function AdminLayout({
             </Link>
 
             <Link
-              href="/admin/auditoria"
+              href="/admin/whatsapp"
               className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 transition-all font-medium"
             >
-              <ShieldAlert className="w-4 h-4 text-emerald-400" />
-              <span>Auditoria Geral</span>
+              <MessageSquare className="w-4 h-4 text-emerald-400" />
+              <span>Central WhatsApp</span>
             </Link>
+
+            {isSuperAdmin && (
+              <Link
+                href="/admin/auditoria"
+                className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 transition-all font-medium"
+              >
+                <ShieldAlert className="w-4 h-4 text-emerald-400" />
+                <span>Auditoria Geral</span>
+              </Link>
+            )}
 
             <Link
               href="/admin/seguranca"
@@ -107,10 +121,16 @@ export default async function AdminLayout({
           <div className="p-3 rounded-xl bg-white/5 border border-white/5">
             <div className="flex items-center justify-between mb-1.5">
               <span className="text-xs font-semibold text-white truncate max-w-[130px]">
-                {adminProfile.fullName || 'Administrador'}
+                {adminProfile.fullName || (isSuperAdmin ? 'Administrador' : 'Operador')}
               </span>
-              <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-[#ff3366]/20 text-[#ff3366] border border-[#ff3366]/40 uppercase">
-                Admin
+              <span
+                className={`px-1.5 py-0.5 rounded text-[10px] font-bold uppercase border ${
+                  isSuperAdmin
+                    ? 'bg-[#ff3366]/20 text-[#ff3366] border-[#ff3366]/40'
+                    : 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40'
+                }`}
+              >
+                {isSuperAdmin ? 'Admin' : 'Operador'}
               </span>
             </div>
             <p className="text-[11px] text-slate-400 truncate font-mono">

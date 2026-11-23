@@ -1,7 +1,7 @@
 import React from 'react';
-import { requireAdmin } from '@/lib/auth/server';
+import { requireStaff } from '@/lib/auth/server';
 import { db } from '@/lib/db';
-import { spots, radioSchedules, establishments, cities } from '@/lib/db/schema';
+import { spots, radioSchedules, establishments, cities, spotRequests, profiles } from '@/lib/db/schema';
 import { desc, eq } from 'drizzle-orm';
 import { connection } from 'next/server';
 import RadioManagerView from './RadioManagerView';
@@ -10,7 +10,7 @@ export const instant = false;
 
 export default async function AdminRadioPage() {
   await connection();
-  await requireAdmin();
+  await requireStaff();
 
   // Buscar todos os spots com estabelecimentos vinculados
   const allSpots = await db
@@ -52,6 +52,24 @@ export default async function AdminRadioPage() {
   const allCities = await db.select().from(cities).orderBy(cities.name);
   const allEstablishments = await db.select().from(establishments).orderBy(establishments.name);
 
+  // Solicitações de spots vindas do Portal do Comerciante (/portal)
+  const allSpotRequests = await db
+    .select({
+      id: spotRequests.id,
+      title: spotRequests.title,
+      scriptNotes: spotRequests.scriptNotes,
+      preferredTimeSlot: spotRequests.preferredTimeSlot,
+      status: spotRequests.status,
+      adminFeedback: spotRequests.adminFeedback,
+      establishmentName: establishments.name,
+      merchantEmail: profiles.email,
+      createdAt: spotRequests.createdAt,
+    })
+    .from(spotRequests)
+    .leftJoin(establishments, eq(spotRequests.establishmentId, establishments.id))
+    .leftJoin(profiles, eq(spotRequests.merchantId, profiles.id))
+    .orderBy(desc(spotRequests.createdAt));
+
   return (
     <div className="space-y-8">
       <div>
@@ -68,6 +86,7 @@ export default async function AdminRadioPage() {
         schedules={allSchedules}
         cities={allCities}
         establishments={allEstablishments}
+        spotRequests={allSpotRequests}
       />
     </div>
   );

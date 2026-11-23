@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
+import { recordWhatsappClickAction } from '@/lib/commerce/actions';
 import {
   Search,
   Store,
@@ -13,6 +14,7 @@ import {
   ArrowRight,
   Radio,
   CheckCircle2,
+  Star,
 } from 'lucide-react';
 
 interface Establishment {
@@ -22,6 +24,7 @@ interface Establishment {
   whatsapp: string | null;
   address: string | null;
   description: string | null;
+  isFeatured?: boolean;
   cityName: string;
   cityState: string;
   categoryId: string;
@@ -163,9 +166,20 @@ export default function GuiaClientView({
             return (
               <div
                 key={est.id}
-                className="group p-6 rounded-2xl bg-white dark:bg-[#0c0f17] border border-slate-200 dark:border-white/10 shadow-sm hover:shadow-xl hover:border-[#ff2a85]/40 transition-all flex flex-col justify-between"
+                className={`group p-6 rounded-2xl bg-white dark:bg-[#0c0f17] border transition-all flex flex-col justify-between relative overflow-hidden ${
+                  est.isFeatured
+                    ? 'border-amber-400/70 dark:border-amber-400/60 shadow-[0_0_25px_rgba(245,158,11,0.15)]'
+                    : 'border-slate-200 dark:border-white/10 shadow-sm hover:shadow-xl hover:border-[#ff2a85]/40'
+                }`}
               >
                 <div>
+                  {est.isFeatured && (
+                    <div className="mb-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-400/40 text-amber-600 dark:text-amber-300 text-[10px] font-black uppercase tracking-wider">
+                      <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
+                      <span>Parceiro Âncora Oficial</span>
+                    </div>
+                  )}
+
                   <div className="flex items-start justify-between gap-3 mb-3">
                     <span className="px-2.5 py-1 rounded-lg bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20 text-[11px] font-semibold">
                       {est.categoryName}
@@ -176,9 +190,11 @@ export default function GuiaClientView({
                     </span>
                   </div>
 
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2 group-hover:text-[#ff2a85] transition-colors">
-                    {est.name}
-                  </h3>
+                  <Link href={`/guia/${est.slug}`}>
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2 group-hover:text-[#ff2a85] transition-colors">
+                      {est.name}
+                    </h3>
+                  </Link>
 
                   {est.description && (
                     <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-3 mb-4">
@@ -194,12 +210,15 @@ export default function GuiaClientView({
                   )}
                 </div>
 
-                <div className="pt-4 border-t border-slate-100 dark:border-white/10">
+                <div className="pt-4 border-t border-slate-100 dark:border-white/10 space-y-2">
                   {waUrl ? (
                     <a
                       href={waUrl}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => {
+                        recordWhatsappClickAction(est.id);
+                      }}
                       className="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs flex items-center justify-center gap-2 transition-all shadow-md shadow-emerald-600/20"
                     >
                       <MessageCircle className="w-4 h-4" />
@@ -211,6 +230,14 @@ export default function GuiaClientView({
                       WhatsApp em cadastramento
                     </div>
                   )}
+
+                  <Link
+                    href={`/guia/${est.slug}`}
+                    className="w-full py-2 px-4 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 font-semibold text-xs flex items-center justify-center gap-1.5 transition-all"
+                  >
+                    <span>Ver Vitrine, Áudios & Ofertas</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
                 </div>
               </div>
             );

@@ -138,7 +138,13 @@ export async function acceptInvitationAction(
       },
     });
 
-    redirect(invite.role === 'admin' ? '/admin' : '/');
+    redirect(
+      invite.role === 'admin' || invite.role === 'operator'
+        ? '/admin'
+        : invite.role === 'merchant'
+        ? '/portal'
+        : '/'
+    );
   } else {
     // --- CASO B: NOVO MEMBRO (Primeiro registro no sistema) ---
     const rawData = {
@@ -211,6 +217,12 @@ export async function acceptInvitationAction(
       password,
     });
 
-    redirect(invite.role === 'admin' ? '/admin' : '/');
+    redirect(
+      invite.role === 'admin' || invite.role === 'operator'
+        ? '/admin'
+        : invite.role === 'merchant'
+        ? '/portal'
+        : '/'
+    );
   }
 }
