@@ -24,7 +24,7 @@ export function SolutionSection() {
       subtitle: "Áudio & Publicidade Contínua",
       description:
         "Programação musical, notícias da cidade e spots comerciais transmitidos online. Sintonizável no celular, no trânsito, em estabelecimentos e residências sem ruído nas ruas.",
-      badge: "Módulo em Planejamento",
+      badge: "Módulo Ativo • Ao Vivo",
       gradient: "from-[#ff2a85] to-[#ff7300]",
       visualPreview: (
         <div className="mt-4 p-3 rounded-xl bg-slate-900/90 text-white text-xs border border-white/10 space-y-2">
@@ -52,7 +52,7 @@ export function SolutionSection() {
       subtitle: "Mensagens para Inscritos",
       description:
         "Envio estruturado e autorizado de comunicados, promoções do dia e avisos de utilidade pública diretamente para os moradores que optaram por se inscrever.",
-      badge: "Módulo em Planejamento",
+      badge: "Módulo Ativo • Grupos",
       gradient: "from-emerald-500 to-teal-500",
       visualPreview: (
         <div className="mt-4 p-3 rounded-xl bg-slate-900/90 text-white text-xs border border-white/10 space-y-2">
@@ -75,7 +75,7 @@ export function SolutionSection() {
       subtitle: "Centralizador Digital",
       description:
         "Um endereço virtual único para a cidade: guia comercial, catálogo de serviços, notícias locais, horários de plantão e classificados organizados.",
-      badge: "Módulo em Planejamento",
+      badge: "Módulo Ativo • Guia & Mural",
       gradient: "from-[#0284c7] to-[#00f0ff]",
       visualPreview: (
         <div className="mt-4 p-3 rounded-xl bg-slate-900/90 text-white text-xs border border-white/10 space-y-2">

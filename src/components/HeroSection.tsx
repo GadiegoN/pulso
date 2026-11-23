@@ -1,44 +1,53 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import {
   ArrowRight,
-  Radio,
   MessageSquare,
   Globe,
-  Share2,
   Zap,
-  MapPin,
   Sparkles,
   CheckCircle2,
   Activity,
-  Layers,
-  Volume2
+  Volume2,
 } from "lucide-react";
 
 export function HeroSection() {
+  const [tilt, setTilt] = useState({ rx: 0, ry: 0, gx: 50, gy: 50 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = (e.clientY - rect.top) / rect.height;
+    const ry = (x - 0.5) * 14;
+    const rx = (0.5 - y) * 14;
+    setTilt({ rx, ry, gx: x * 100, gy: y * 100 });
+  };
+
+  const handleMouseLeave = () => {
+    setTilt({ rx: 0, ry: 0, gx: 50, gy: 50 });
+  };
+
   return (
-    <section className="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden vice-grid-bg">
+    <section className="relative pt-32 pb-24 md:pt-40 md:pb-36 overflow-hidden vice-grid-bg">
       {/* GTA 6 Ambient Lighting Blooms */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-[700px] h-[400px] md:w-[900px] md:h-[500px] bg-gradient-to-tr from-[#ff2a85]/20 via-[#ff7300]/15 to-[#00f0ff]/20 blur-3xl opacity-60 dark:opacity-40"
+        className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-[700px] h-[400px] md:w-[900px] md:h-[500px] bg-gradient-to-tr from-[#ff2a85]/20 via-[#ff7300]/15 to-[#00f0ff]/20 blur-3xl opacity-60 dark:opacity-40 animate-pulse-glow"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute top-1/3 -left-40 w-96 h-96 bg-[#ff2a85]/15 blur-[120px] rounded-full"
+        className="pointer-events-none absolute top-1/3 -left-40 w-96 h-96 bg-[#ff2a85]/15 blur-[120px] rounded-full animate-pulse-glow"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute top-1/2 -right-40 w-96 h-96 bg-[#00f0ff]/15 blur-[120px] rounded-full"
+        className="pointer-events-none absolute top-1/2 -right-40 w-96 h-96 bg-[#00f0ff]/15 blur-[120px] rounded-full animate-pulse-glow"
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-
           {/* Left Column: Headline, Copy & CTAs */}
           <div className="lg:col-span-7 text-center lg:text-left space-y-8">
-
             {/* Tag / Badge */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-slate-300 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-md shadow-sm">
               <span className="flex h-2 w-2 rounded-full bg-[#ff2a85] animate-ping" />
@@ -57,8 +66,11 @@ export function HeroSection() {
 
             {/* Subheadline */}
             <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
-              <strong className="font-semibold text-slate-900 dark:text-white">Uma mensagem. Vários canais. Toda a cidade conectada.</strong>{" "}
-              Uma nova maneira de integrar empresas, comércio e pessoas. Mais alcance para quem comunica, mais informação para quem vive a cidade.
+              <strong className="font-semibold text-slate-900 dark:text-white">
+                Uma mensagem. Vários canais. Toda a cidade conectada.
+              </strong>{" "}
+              Uma nova maneira de integrar empresas, comércio e pessoas. Mais alcance
+              para quem comunica, mais informação para quem vive a cidade.
             </p>
 
             {/* CTAs */}
@@ -82,28 +94,57 @@ export function HeroSection() {
             {/* Value Indicators */}
             <div className="pt-6 border-t border-slate-200/80 dark:border-white/10 grid grid-cols-3 gap-4 max-w-lg mx-auto lg:mx-0">
               <div className="space-y-1">
-                <div className="text-2xl font-black text-slate-900 dark:text-white">100%</div>
-                <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">Digital & Integrado</div>
+                <div className="text-2xl font-black text-slate-900 dark:text-white">
+                  100%
+                </div>
+                <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                  Digital & Integrado
+                </div>
               </div>
               <div className="space-y-1">
-                <div className="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-[#ff2a85] to-[#ff7300]">Multi</div>
-                <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">Canais de Difusão</div>
+                <div className="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-[#ff2a85] to-[#ff7300]">
+                  Multi
+                </div>
+                <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                  Canais de Difusão
+                </div>
               </div>
               <div className="space-y-1">
-                <div className="text-2xl font-black text-[#0284c7] dark:text-[#00f0ff]">Pulso</div>
-                <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">No Ritmo da Cidade</div>
+                <div className="text-2xl font-black text-[#0284c7] dark:text-[#00f0ff]">
+                  Pulso
+                </div>
+                <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                  No Ritmo da Cidade
+                </div>
               </div>
             </div>
-
           </div>
 
-          {/* Right Column: Custom Graphic Composition */}
-          <div className="lg:col-span-5 relative">
-            <div className="relative mx-auto max-w-md lg:max-w-none">
-
-              {/* Central Glowing Card Container */}
-              <div className="relative rounded-3xl p-1 bg-gradient-to-tr from-[#ff2a85] via-[#ff7300] to-[#00f0ff] shadow-2xl shadow-[#ff2a85]/20 dark:shadow-[#00f0ff]/10">
+          {/* Right Column: GTA IV / VI 3D Parallax & Ken Burns Composition (Sem overflow:hidden para não cortar badges) */}
+          <div className="lg:col-span-5 relative [perspective:1200px] py-6">
+            <div
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
+              style={{
+                transform: `rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg)`,
+                transition:
+                  tilt.rx === 0 && tilt.ry === 0
+                    ? "transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)"
+                    : "transform 0.1s ease-out",
+              }}
+              className="relative mx-auto max-w-md lg:max-w-none [transform-style:preserve-3d]"
+            >
+              {/* Central Glowing Card Container with Ken Burns Drift */}
+              <div className="relative rounded-3xl p-1 bg-gradient-to-tr from-[#ff2a85] via-[#ff7300] to-[#00f0ff] shadow-2xl shadow-[#ff2a85]/20 dark:shadow-[#00f0ff]/15 animate-gta-kenburns">
                 <div className="rounded-[22px] bg-slate-900 text-white p-6 sm:p-7 relative overflow-hidden">
+                  {/* Dynamic GTA Neon Specular Glare following cursor */}
+                  <div
+                    aria-hidden="true"
+                    style={{
+                      background: `radial-gradient(360px circle at ${tilt.gx}% ${tilt.gy}%, rgba(255,42,133,0.22), rgba(0,240,255,0.1), transparent 70%)`,
+                    }}
+                    className="pointer-events-none absolute inset-0 transition-opacity duration-300"
+                  />
 
                   {/* Subtle Vice City Palm / Grid Silhouette in BG */}
                   <div
@@ -114,14 +155,16 @@ export function HeroSection() {
                   {/* Header of the Simulation */}
                   <div className="relative flex items-center justify-between pb-5 border-b border-white/10">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#ff2a85] to-[#ff7300] flex items-center justify-center text-white">
+                      <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#ff2a85] to-[#ff7300] flex items-center justify-center text-white shadow-lg shadow-[#ff2a85]/30">
                         <Activity className="w-5 h-5 animate-pulse" />
                       </div>
                       <div>
-                        <div className="text-sm font-bold tracking-wide">PULSO HUB</div>
+                        <div className="text-sm font-bold tracking-wide">
+                          PULSO HUB
+                        </div>
                         <div className="text-xs text-slate-400 flex items-center gap-1.5">
                           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                          Rede Ativa em Fase Piloto
+                          Rede Ativa em Conquista - MG
                         </div>
                       </div>
                     </div>
@@ -132,15 +175,18 @@ export function HeroSection() {
 
                   {/* Simulated Channels Showcase */}
                   <div className="relative mt-5 space-y-3.5">
-
                     {/* Simulated Stream 1: Digital Radio */}
-                    <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 hover:border-[#ff2a85]/50 transition-colors">
+                    <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 hover:border-[#ff2a85]/60 hover:translate-x-1 transition-all duration-300">
                       <div className="flex items-center justify-between text-xs mb-2">
                         <div className="flex items-center gap-2">
                           <Volume2 className="w-4 h-4 text-[#ff2a85]" />
-                          <span className="font-semibold text-slate-200">Pulso Rádio Web</span>
+                          <span className="font-semibold text-slate-200">
+                            Pulso Rádio Web
+                          </span>
                         </div>
-                        <span className="text-[10px] text-pink-400 font-mono font-bold">STREAM AO VIVO</span>
+                        <span className="text-[10px] text-pink-400 font-mono font-bold">
+                          STREAM AO VIVO
+                        </span>
                       </div>
                       <div className="flex items-center justify-between gap-3">
                         <div className="text-xs text-slate-400 truncate">
@@ -157,13 +203,17 @@ export function HeroSection() {
                     </div>
 
                     {/* Simulated Stream 2: WhatsApp VIP Channel */}
-                    <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 hover:border-emerald-500/50 transition-colors">
+                    <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 hover:border-emerald-500/60 hover:translate-x-1 transition-all duration-300">
                       <div className="flex items-center justify-between text-xs mb-1.5">
                         <div className="flex items-center gap-2">
                           <MessageSquare className="w-4 h-4 text-emerald-400" />
-                          <span className="font-semibold text-slate-200">Distribuição via WhatsApp</span>
+                          <span className="font-semibold text-slate-200">
+                            Distribuição via WhatsApp
+                          </span>
                         </div>
-                        <span className="text-[10px] text-emerald-400 font-bold">INSCRITOS</span>
+                        <span className="text-[10px] text-emerald-400 font-bold">
+                          INSCRITOS
+                        </span>
                       </div>
                       <p className="text-xs text-slate-400">
                         Comunicados e ofertas direto no celular das pessoas cadastradas.
@@ -171,19 +221,22 @@ export function HeroSection() {
                     </div>
 
                     {/* Simulated Stream 3: Local Portal */}
-                    <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 hover:border-[#00f0ff]/50 transition-colors">
+                    <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 hover:border-[#00f0ff]/60 hover:translate-x-1 transition-all duration-300">
                       <div className="flex items-center justify-between text-xs mb-1.5">
                         <div className="flex items-center gap-2">
                           <Globe className="w-4 h-4 text-[#00f0ff]" />
-                          <span className="font-semibold text-slate-200">Portal & Vitrine da Cidade</span>
+                          <span className="font-semibold text-slate-200">
+                            Portal & Vitrine da Cidade
+                          </span>
                         </div>
-                        <span className="text-[10px] text-[#00f0ff] font-bold">CENTRALIZADO</span>
+                        <span className="text-[10px] text-[#00f0ff] font-bold">
+                          CENTRALIZADO
+                        </span>
                       </div>
                       <p className="text-xs text-slate-400">
                         Um único endereço para conferir o que acontece na região.
                       </p>
                     </div>
-
                   </div>
 
                   {/* Flow footer indicator */}
@@ -192,34 +245,37 @@ export function HeroSection() {
                       <Sparkles className="w-3.5 h-3.5 text-[#ff7300]" />
                       Conectando marcas e comunidade
                     </span>
-                    <span className="font-semibold text-slate-200">Sem poluição sonora</span>
+                    <span className="font-semibold text-slate-200">
+                      Sem poluição sonora
+                    </span>
                   </div>
-
                 </div>
               </div>
 
-              {/* Floating Badge Bottom Left */}
-              <div className="absolute -bottom-12 -left-4 sm:-left-6 p-3 sm:p-4 rounded-2xl bg-white dark:bg-[#121427] border border-slate-200 dark:border-white/15 shadow-xl flex items-center gap-3 backdrop-blur-lg">
+              {/* Floating Badge Bottom Left (3D Parallax Foreground) */}
+              <div className="absolute -bottom-10 -left-4 sm:-left-6 z-20 p-3 sm:p-4 rounded-2xl bg-white dark:bg-[#121427] border border-slate-200 dark:border-white/15 shadow-2xl flex items-center gap-3 backdrop-blur-lg animate-gta-float">
                 <div className="w-9 h-9 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold">
                   <CheckCircle2 className="w-5 h-5" />
                 </div>
                 <div>
-                  <div className="text-xs font-bold text-slate-900 dark:text-white">Mais Organização</div>
-                  <div className="text-[11px] text-slate-500 dark:text-slate-400">Para o comércio e a cidade</div>
+                  <div className="text-xs font-bold text-slate-900 dark:text-white">
+                    Mais Organização
+                  </div>
+                  <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                    Para o comércio e a cidade
+                  </div>
                 </div>
               </div>
 
-              {/* Floating Badge Top Right */}
-              <div className="hidden sm:flex absolute -top-5 -right-4 p-3 rounded-2xl bg-white dark:bg-[#121427] border border-slate-200 dark:border-white/15 shadow-xl items-center gap-2.5 backdrop-blur-lg">
+              {/* Floating Badge Top Right (3D Parallax Foreground) */}
+              <div className="hidden sm:flex absolute -top-5 -right-4 z-20 p-3 rounded-2xl bg-white dark:bg-[#121427] border border-slate-200 dark:border-white/15 shadow-2xl items-center gap-2.5 backdrop-blur-lg animate-gta-float-reverse">
                 <Zap className="w-4 h-4 text-[#ff7300]" />
                 <span className="text-xs font-bold text-slate-900 dark:text-white tracking-wide">
                   Visão Multicanal
                 </span>
               </div>
-
             </div>
           </div>
-
         </div>
       </div>
     </section>

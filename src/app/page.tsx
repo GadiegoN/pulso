@@ -14,6 +14,7 @@ import { LeadershipSection } from "@/components/LeadershipSection";
 import { VisionSection } from "@/components/VisionSection";
 import { ContactCtaSection } from "@/components/ContactCtaSection";
 import { Footer } from "@/components/Footer";
+import { GtaScrollAnimator } from "@/components/GtaScrollAnimator";
 
 export const instant = false;
 
@@ -52,6 +53,9 @@ export default async function Home() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-300">
+      {/* GTA IV / VI Cinematic Scroll Progress & Reveal Engine */}
+      <GtaScrollAnimator />
+
       {/* Fixed Navigation Bar */}
       <Navbar />
 

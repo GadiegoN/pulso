@@ -89,18 +89,127 @@ body {
   pointer-events: none;
 }
 
-/* Vice grid background */
+/* Animated Vice grid background */
+@keyframes viceGridMove {
+  0% {
+    background-position: 0px 0px;
+  }
+  100% {
+    background-position: 40px 40px;
+  }
+}
+
 .vice-grid-bg {
   background-size: 40px 40px;
-  background-image: 
+  background-image:
     linear-gradient(to right, rgba(148, 163, 184, 0.08) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+  animation: viceGridMove 14s linear infinite;
 }
 
 .dark .vice-grid-bg {
-  background-image: 
+  background-image:
     linear-gradient(to right, rgba(255, 42, 133, 0.07) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(0, 240, 255, 0.07) 1px, transparent 1px);
+}
+
+/* GTA IV / GTA VI Ken Burns Slow Pan & Zoom Animation */
+@keyframes gtaKenBurns {
+  0% {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: scale(1.028) translate3d(-5px, -4px, 0);
+  }
+  100% {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+}
+
+.animate-gta-kenburns {
+  animation: gtaKenBurns 10s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+}
+
+/* GTA Floating Parallax Badges (Foreground vs Background Layer Separation) */
+@keyframes gtaFloatSlow {
+  0%, 100% {
+    transform: translate3d(0, 0px, 35px) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(4px, -9px, 35px) rotate(-0.8deg);
+  }
+}
+
+@keyframes gtaFloatReverse {
+  0%, 100% {
+    transform: translate3d(0, 0px, 45px) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(-5px, 8px, 45px) rotate(1deg);
+  }
+}
+
+.animate-gta-float {
+  animation: gtaFloatSlow 6s ease-in-out infinite;
+}
+
+.animate-gta-float-reverse {
+  animation: gtaFloatReverse 6.8s ease-in-out infinite;
+}
+
+/* GTA Cinematic Scroll Reveal (Rockstar Zoom-Down + Skew Unwrap) */
+.gta-reveal {
+  opacity: 0;
+  transform: translate3d(0, 38px, 0) scale(1.04) skewY(0.7deg);
+  transition:
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.gta-reveal.gta-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1) skewY(0deg);
+}
+
+/* GTA Card Neon Light Sweep on Hover (Applied ONLY to inner self-contained cards) */
+.gta-card-sweep {
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.35s ease;
+}
+
+.gta-card-sweep::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -130%;
+  width: 65%;
+  height: 200%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 42, 133, 0.14),
+    rgba(0, 240, 255, 0.18),
+    transparent
+  );
+  transform: rotate(25deg);
+  transition: left 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.gta-card-sweep:hover::after {
+  left: 140%;
+}
+
+.gta-card-sweep:hover {
+  transform: translate3d(0, -6px, 0) scale(1.015);
+  box-shadow:
+    0 20px 40px -15px rgba(255, 42, 133, 0.22),
+    0 0 25px -5px rgba(0, 240, 255, 0.15);
 }
 
 /* Subtle wave animation */
